@@ -109,6 +109,28 @@
                 </ul>
             </li>
         @endcan
+        @can('penggajian_access')
+            <li class="c-sidebar-nav-dropdown {{ request()->is("admin/kasbons*") ? "c-show" : "" }}">
+                <a class="c-sidebar-nav-dropdown-toggle" href="#">
+                    <i class="fa-fw fas fa-dollar-sign c-sidebar-nav-icon">
+
+                    </i>
+                    {{ trans('cruds.penggajian.title') }}
+                </a>
+                <ul class="c-sidebar-nav-dropdown-items">
+                    @can('kasbon_access')
+                        <li class="c-sidebar-nav-item">
+                            <a href="{{ route("admin.kasbons.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/kasbons") || request()->is("admin/kasbons/*") ? "c-active" : "" }}">
+                                <i class="fa-fw far fa-credit-card c-sidebar-nav-icon">
+
+                                </i>
+                                {{ trans('cruds.kasbon.title') }}
+                            </a>
+                        </li>
+                    @endcan
+                </ul>
+            </li>
+        @endcan
         @can('pemasukan_access')
             <li class="c-sidebar-nav-dropdown {{ request()->is("admin/fakturs*") ? "c-show" : "" }} {{ request()->is("admin/pembayarans*") ? "c-show" : "" }} {{ request()->is("admin/carts*") ? "c-show" : "" }}">
                 <a class="c-sidebar-nav-dropdown-toggle" href="#">

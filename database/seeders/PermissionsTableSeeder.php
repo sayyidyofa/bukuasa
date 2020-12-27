@@ -320,6 +320,30 @@ class PermissionsTableSeeder extends Seeder
             ],
             [
                 'id'    => 78,
+                'title' => 'penggajian_access',
+            ],
+            [
+                'id'    => 79,
+                'title' => 'kasbon_create',
+            ],
+            [
+                'id'    => 80,
+                'title' => 'kasbon_edit',
+            ],
+            [
+                'id'    => 81,
+                'title' => 'kasbon_show',
+            ],
+            [
+                'id'    => 82,
+                'title' => 'kasbon_delete',
+            ],
+            [
+                'id'    => 83,
+                'title' => 'kasbon_access',
+            ],
+            [
+                'id'    => 84,
                 'title' => 'profile_password_edit',
             ],
         ];

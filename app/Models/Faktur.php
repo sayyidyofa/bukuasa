@@ -44,6 +44,12 @@ class Faktur extends Model implements HasMedia
         return $date->format('Y-m-d H:i:s');
     }
 
+    public static function boot()
+    {
+        parent::boot();
+        Faktur::observe(new \App\Observers\FakturActionObserver);
+    }
+
     public function registerMediaConversions(Media $media = null): void
     {
         $this->addMediaConversion('thumb')->fit('crop', 50, 50);
