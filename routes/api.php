@@ -45,4 +45,7 @@ Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Admin', '
 
     // Crews
     Route::apiResource('crews', 'CrewApiController');
+
+    // Kasbons
+    Route::apiResource('kasbons', 'KasbonApiController');
 });
