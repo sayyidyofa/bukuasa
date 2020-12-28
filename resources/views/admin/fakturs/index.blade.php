@@ -15,58 +15,114 @@
     </div>
 
     <div class="card-body">
-        <table class=" table table-bordered table-striped table-hover ajaxTable datatable datatable-Faktur">
-            <thead>
-                <tr>
-                    <th width="10">
+        <div class="table-responsive">
+            <table class=" table table-bordered table-striped table-hover datatable datatable-Faktur">
+                <thead>
+                    <tr>
+                        <th width="10">
 
-                    </th>
-                    <th>
-                        {{ trans('cruds.faktur.fields.id') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.faktur.fields.no_faktur') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.faktur.fields.tgl_faktur') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.faktur.fields.tagihan') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.faktur.fields.diskon_markup') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.faktur.fields.photo') }}
-                    </th>
-                    <th>
-                        &nbsp;
-                    </th>
-                </tr>
-                <tr>
-                    <td>
-                    </td>
-                    <td>
-                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                    </td>
-                    <td>
-                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                    </td>
-                    <td>
-                    </td>
-                    <td>
-                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                    </td>
-                    <td>
-                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                    </td>
-                    <td>
-                    </td>
-                    <td>
-                    </td>
-                </tr>
-            </thead>
-        </table>
+                        </th>
+                        <th>
+                            {{ trans('cruds.faktur.fields.id') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.faktur.fields.no_faktur') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.faktur.fields.tgl_faktur') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.faktur.fields.tagihan') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.faktur.fields.diskon_markup') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.faktur.fields.photo') }}
+                        </th>
+                        <th>
+                            &nbsp;
+                        </th>
+                    </tr>
+                    <tr>
+                        <td>
+                        </td>
+                        <td>
+                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                        </td>
+                        <td>
+                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                        </td>
+                        <td>
+                        </td>
+                        <td>
+                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                        </td>
+                        <td>
+                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                        </td>
+                        <td>
+                        </td>
+                        <td>
+                        </td>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($fakturs as $key => $faktur)
+                        <tr data-entry-id="{{ $faktur->id }}">
+                            <td>
+
+                            </td>
+                            <td>
+                                {{ $faktur->id ?? '' }}
+                            </td>
+                            <td>
+                                {{ $faktur->no_faktur ?? '' }}
+                            </td>
+                            <td>
+                                {{ $faktur->tgl_faktur ?? '' }}
+                            </td>
+                            <td>
+                                {{ $faktur->tagihan ?? '' }}
+                            </td>
+                            <td>
+                                {{ $faktur->diskon_markup ?? '' }}
+                            </td>
+                            <td>
+                                @if($faktur->photo)
+                                    <a href="{{ $faktur->photo->getUrl() }}" target="_blank" style="display: inline-block">
+                                        <img src="{{ $faktur->photo->getUrl('thumb') }}">
+                                    </a>
+                                @endif
+                            </td>
+                            <td>
+                                @can('faktur_show')
+                                    <a class="btn btn-xs btn-primary" href="{{ route('admin.fakturs.show', $faktur->id) }}">
+                                        {{ trans('global.view') }}
+                                    </a>
+                                @endcan
+
+                                @can('faktur_edit')
+                                    <a class="btn btn-xs btn-info" href="{{ route('admin.fakturs.edit', $faktur->id) }}">
+                                        {{ trans('global.edit') }}
+                                    </a>
+                                @endcan
+
+                                @can('faktur_delete')
+                                    <form action="{{ route('admin.fakturs.destroy', $faktur->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
+                                        <input type="hidden" name="_method" value="DELETE">
+                                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                        <input type="submit" class="btn btn-xs btn-danger" value="{{ trans('global.delete') }}">
+                                    </form>
+                                @endcan
+
+                            </td>
+
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
 
@@ -79,14 +135,14 @@
     $(function () {
   let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
 @can('faktur_delete')
-  let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
+  let deleteButtonTrans = '{{ trans('global.datatables.delete') }}'
   let deleteButton = {
     text: deleteButtonTrans,
     url: "{{ route('admin.fakturs.massDestroy') }}",
     className: 'btn-danger',
     action: function (e, dt, node, config) {
-      var ids = $.map(dt.rows({ selected: true }).data(), function (entry) {
-          return entry.id
+      var ids = $.map(dt.rows({ selected: true }).nodes(), function (entry) {
+          return $(entry).data('entry-id')
       });
 
       if (ids.length === 0) {
@@ -108,28 +164,12 @@
   dtButtons.push(deleteButton)
 @endcan
 
-  let dtOverrideGlobals = {
-    buttons: dtButtons,
-    processing: true,
-    serverSide: true,
-    retrieve: true,
-    aaSorting: [],
-    ajax: "{{ route('admin.fakturs.index') }}",
-    columns: [
-      { data: 'placeholder', name: 'placeholder' },
-{ data: 'id', name: 'id' },
-{ data: 'no_faktur', name: 'no_faktur' },
-{ data: 'tgl_faktur', name: 'tgl_faktur' },
-{ data: 'tagihan', name: 'tagihan' },
-{ data: 'diskon_markup', name: 'diskon_markup' },
-{ data: 'photo', name: 'photo', sortable: false, searchable: false },
-{ data: 'actions', name: '{{ trans('global.actions') }}' }
-    ],
+  $.extend(true, $.fn.dataTable.defaults, {
     orderCellsTop: true,
-    order: [[ 2, 'desc' ]],
+    order: [[ 2, 'asc' ]],
     pageLength: 25,
-  };
-  let table = $('.datatable-Faktur').DataTable(dtOverrideGlobals);
+  });
+  let table = $('.datatable-Faktur:not(.ajaxTable)').DataTable({ buttons: dtButtons })
   $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e){
       $($.fn.dataTable.tables(true)).DataTable()
           .columns.adjust();
@@ -156,7 +196,7 @@ table.on('column-visibility.dt', function(e, settings, column, state) {
           visibleColumnsIndexes.push(colIdx);
       });
   })
-});
+})
 
 </script>
 @endsection

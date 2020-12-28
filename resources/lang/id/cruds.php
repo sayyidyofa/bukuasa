@@ -1,11 +1,11 @@
 <?php
 
 return [
-    'userManagement'  => [
+    'userManagement'    => [
         'title'          => 'Manajemen Pengguna',
         'title_singular' => 'Manajemen Pengguna',
     ],
-    'permission'      => [
+    'permission'        => [
         'title'          => 'Izin',
         'title_singular' => 'Izin',
         'fields'         => [
@@ -21,7 +21,7 @@ return [
             'deleted_at_helper' => ' ',
         ],
     ],
-    'role'            => [
+    'role'              => [
         'title'          => 'Peranan',
         'title_singular' => 'Peran',
         'fields'         => [
@@ -39,7 +39,7 @@ return [
             'deleted_at_helper'  => ' ',
         ],
     ],
-    'user'            => [
+    'user'              => [
         'title'          => 'Daftar Pengguna',
         'title_singular' => 'Pengguna',
         'fields'         => [
@@ -65,7 +65,7 @@ return [
             'deleted_at_helper'        => ' ',
         ],
     ],
-    'auditLog'        => [
+    'auditLog'          => [
         'title'          => 'Audit Logs',
         'title_singular' => 'Audit Log',
         'fields'         => [
@@ -89,15 +89,15 @@ return [
             'updated_at_helper'   => ' ',
         ],
     ],
-    'laporanHarian'   => [
+    'laporanHarian'     => [
         'title'          => 'Laporan',
         'title_singular' => 'Laporan',
     ],
-    'produk'          => [
+    'produk'            => [
         'title'          => 'Produk',
         'title_singular' => 'Produk',
     ],
-    'productCategory' => [
+    'productCategory'   => [
         'title'          => 'Kategori Produk',
         'title_singular' => 'Kategori Produk',
         'fields'         => [
@@ -115,7 +115,7 @@ return [
             'description_helper' => ' ',
         ],
     ],
-    'product'         => [
+    'product'           => [
         'title'          => 'Produk',
         'title_singular' => 'Produk',
         'fields'         => [
@@ -135,15 +135,15 @@ return [
             'product_category_helper' => ' ',
         ],
     ],
-    'pemasukan'       => [
+    'pemasukan'         => [
         'title'          => 'Pemasukan',
         'title_singular' => 'Pemasukan',
     ],
-    'pengeluaran'     => [
+    'pengeluaran'       => [
         'title'          => 'Pengeluaran',
         'title_singular' => 'Pengeluaran',
     ],
-    'faktur'          => [
+    'faktur'            => [
         'title'          => 'Faktur',
         'title_singular' => 'Faktur',
         'fields'         => [
@@ -167,7 +167,7 @@ return [
             'photo_helper'         => ' ',
         ],
     ],
-    'pembayaran'      => [
+    'pembayaran'        => [
         'title'          => 'Pembayaran',
         'title_singular' => 'Pembayaran',
         'fields'         => [
@@ -199,7 +199,7 @@ return [
             'faktur_helper'        => ' ',
         ],
     ],
-    'pelanggan'       => [
+    'pelanggan'         => [
         'title'          => 'Pelanggan',
         'title_singular' => 'Pelanggan',
         'fields'         => [
@@ -219,7 +219,7 @@ return [
             'deleted_at_helper' => ' ',
         ],
     ],
-    'welding'         => [
+    'welding'           => [
         'title'          => 'Hasil Las',
         'title_singular' => 'Hasil La',
         'fields'         => [
@@ -245,7 +245,7 @@ return [
             'photo_helper'       => 'Scan/foto laporan las, opsional',
         ],
     ],
-    'attendance'      => [
+    'attendance'        => [
         'title'          => 'Absensi',
         'title_singular' => 'Absensi',
         'fields'         => [
@@ -267,7 +267,7 @@ return [
             'deleted_at_helper' => ' ',
         ],
     ],
-    'cart'            => [
+    'cart'              => [
         'title'          => 'Keranjang',
         'title_singular' => 'Keranjang',
         'fields'         => [
@@ -289,7 +289,7 @@ return [
             'deleted_at_helper'  => ' ',
         ],
     ],
-    'overtime'        => [
+    'overtime'          => [
         'title'          => 'Lembur',
         'title_singular' => 'Lembur',
         'fields'         => [
@@ -313,7 +313,7 @@ return [
             'deleted_at_helper' => ' ',
         ],
     ],
-    'delivery'        => [
+    'delivery'          => [
         'title'          => 'Pengiriman',
         'title_singular' => 'Pengiriman',
         'fields'         => [
@@ -335,7 +335,7 @@ return [
             'faktur_helper'        => ' ',
         ],
     ],
-    'crew'            => [
+    'crew'              => [
         'title'          => 'Kru Pengiriman',
         'title_singular' => 'Kru Pengiriman',
         'fields'         => [
@@ -355,11 +355,11 @@ return [
             'deleted_at_helper' => ' ',
         ],
     ],
-    'penggajian'      => [
+    'penggajian'        => [
         'title'          => 'Penggajian',
         'title_singular' => 'Penggajian',
     ],
-    'kasbon'          => [
+    'kasbon'            => [
         'title'          => 'Kasbon',
         'title_singular' => 'Kasbon',
         'fields'         => [
@@ -381,7 +381,7 @@ return [
             'deleted_at_helper' => ' ',
         ],
     ],
-    'salary'          => [
+    'salary'            => [
         'title'          => 'Gaji',
         'title_singular' => 'Gaji',
         'fields'         => [
@@ -404,6 +404,112 @@ return [
             'updated_at'        => 'Updated at',
             'updated_at_helper' => ' ',
             'deleted_at'        => 'Deleted at',
+            'deleted_at_helper' => ' ',
+        ],
+    ],
+    'contentManagement' => [
+        'title'          => 'Content management',
+        'title_singular' => 'Content management',
+    ],
+    'contentCategory'   => [
+        'title'          => 'Categories',
+        'title_singular' => 'Category',
+        'fields'         => [
+            'id'                => 'ID',
+            'id_helper'         => ' ',
+            'name'              => 'Name',
+            'name_helper'       => ' ',
+            'slug'              => 'Slug',
+            'slug_helper'       => ' ',
+            'created_at'        => 'Created at',
+            'created_at_helper' => ' ',
+            'updated_at'        => 'Updated At',
+            'updated_at_helper' => ' ',
+            'deleted_at'        => 'Deleted At',
+            'deleted_at_helper' => ' ',
+        ],
+    ],
+    'contentTag'        => [
+        'title'          => 'Tags',
+        'title_singular' => 'Tag',
+        'fields'         => [
+            'id'                => 'ID',
+            'id_helper'         => ' ',
+            'name'              => 'Name',
+            'name_helper'       => ' ',
+            'slug'              => 'Slug',
+            'slug_helper'       => ' ',
+            'created_at'        => 'Created at',
+            'created_at_helper' => ' ',
+            'updated_at'        => 'Updated At',
+            'updated_at_helper' => ' ',
+            'deleted_at'        => 'Deleted At',
+            'deleted_at_helper' => ' ',
+        ],
+    ],
+    'contentPage'       => [
+        'title'          => 'Pages',
+        'title_singular' => 'Page',
+        'fields'         => [
+            'id'                    => 'ID',
+            'id_helper'             => ' ',
+            'title'                 => 'Title',
+            'title_helper'          => ' ',
+            'category'              => 'Categories',
+            'category_helper'       => ' ',
+            'tag'                   => 'Tags',
+            'tag_helper'            => ' ',
+            'page_text'             => 'Full Text',
+            'page_text_helper'      => ' ',
+            'excerpt'               => 'Excerpt',
+            'excerpt_helper'        => ' ',
+            'featured_image'        => 'Featured Image',
+            'featured_image_helper' => ' ',
+            'created_at'            => 'Created at',
+            'created_at_helper'     => ' ',
+            'updated_at'            => 'Updated At',
+            'updated_at_helper'     => ' ',
+            'deleted_at'            => 'Deleted At',
+            'deleted_at_helper'     => ' ',
+        ],
+    ],
+    'faqManagement'     => [
+        'title'          => 'FAQ Management',
+        'title_singular' => 'FAQ Management',
+    ],
+    'faqCategory'       => [
+        'title'          => 'Categories',
+        'title_singular' => 'Category',
+        'fields'         => [
+            'id'                => 'ID',
+            'id_helper'         => ' ',
+            'category'          => 'Category',
+            'category_helper'   => ' ',
+            'created_at'        => 'Created at',
+            'created_at_helper' => ' ',
+            'updated_at'        => 'Updated At',
+            'updated_at_helper' => ' ',
+            'deleted_at'        => 'Deleted At',
+            'deleted_at_helper' => ' ',
+        ],
+    ],
+    'faqQuestion'       => [
+        'title'          => 'Questions',
+        'title_singular' => 'Question',
+        'fields'         => [
+            'id'                => 'ID',
+            'id_helper'         => ' ',
+            'category'          => 'Category',
+            'category_helper'   => ' ',
+            'question'          => 'Question',
+            'question_helper'   => ' ',
+            'answer'            => 'Answer',
+            'answer_helper'     => ' ',
+            'created_at'        => 'Created at',
+            'created_at_helper' => ' ',
+            'updated_at'        => 'Updated At',
+            'updated_at_helper' => ' ',
+            'deleted_at'        => 'Deleted At',
             'deleted_at_helper' => ' ',
         ],
     ],

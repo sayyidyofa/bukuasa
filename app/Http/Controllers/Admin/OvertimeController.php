@@ -11,60 +11,16 @@ use App\Models\User;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Yajra\DataTables\Facades\DataTables;
 
 class OvertimeController extends Controller
 {
-    public function index(Request $request)
+    public function index()
     {
         abort_if(Gate::denies('overtime_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        if ($request->ajax()) {
-            $query = Overtime::with(['user'])->select(sprintf('%s.*', (new Overtime)->table));
-            $table = Datatables::of($query);
+        $overtimes = Overtime::with(['user'])->get();
 
-            $table->addColumn('placeholder', '&nbsp;');
-            $table->addColumn('actions', '&nbsp;');
-
-            $table->editColumn('actions', function ($row) {
-                $viewGate      = 'overtime_show';
-                $editGate      = 'overtime_edit';
-                $deleteGate    = 'overtime_delete';
-                $crudRoutePart = 'overtimes';
-
-                return view('partials.datatablesActions', compact(
-                    'viewGate',
-                    'editGate',
-                    'deleteGate',
-                    'crudRoutePart',
-                    'row'
-                ));
-            });
-
-            $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : "";
-            });
-            $table->addColumn('user_name', function ($row) {
-                return $row->user ? $row->user->name : '';
-            });
-
-            $table->editColumn('dept', function ($row) {
-                return $row->dept ? $row->dept : "";
-            });
-
-            $table->editColumn('start_hour', function ($row) {
-                return $row->start_hour ? $row->start_hour : "";
-            });
-            $table->editColumn('end_hour', function ($row) {
-                return $row->end_hour ? $row->end_hour : "";
-            });
-
-            $table->rawColumns(['actions', 'placeholder', 'user']);
-
-            return $table->make(true);
-        }
-
-        return view('admin.overtimes.index');
+        return view('admin.overtimes.index', compact('overtimes'));
     }
 
     public function create()

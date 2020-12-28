@@ -14,66 +14,22 @@ use Gate;
 use Illuminate\Http\Request;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
-use Yajra\DataTables\Facades\DataTables;
 
 class WeldingController extends Controller
 {
     use MediaUploadingTrait;
 
-    public function index(Request $request)
+    public function index()
     {
         abort_if(Gate::denies('welding_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        if ($request->ajax()) {
-            $query = Welding::with(['user', 'product'])->select(sprintf('%s.*', (new Welding)->table));
-            $table = Datatables::of($query);
+        $weldings = Welding::with(['user', 'product', 'media'])->get();
 
-            $table->addColumn('placeholder', '&nbsp;');
-            $table->addColumn('actions', '&nbsp;');
+        $users = User::get();
 
-            $table->editColumn('actions', function ($row) {
-                $viewGate      = 'welding_show';
-                $editGate      = 'welding_edit';
-                $deleteGate    = 'welding_delete';
-                $crudRoutePart = 'weldings';
-
-                return view('partials.datatablesActions', compact(
-                    'viewGate',
-                    'editGate',
-                    'deleteGate',
-                    'crudRoutePart',
-                    'row'
-                ));
-            });
-
-            $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : "";
-            });
-
-            $table->addColumn('user_name', function ($row) {
-                return $row->user ? $row->user->name : '';
-            });
-
-            $table->addColumn('product_name', function ($row) {
-                return $row->product ? $row->product->name : '';
-            });
-
-            $table->editColumn('weight_kg', function ($row) {
-                return $row->weight_kg ? $row->weight_kg : "";
-            });
-            $table->editColumn('amount_unit', function ($row) {
-                return $row->amount_unit ? $row->amount_unit : "";
-            });
-
-            $table->rawColumns(['actions', 'placeholder', 'user', 'product']);
-
-            return $table->make(true);
-        }
-
-        $users    = User::get();
         $products = Product::get();
 
-        return view('admin.weldings.index', compact('users', 'products'));
+        return view('admin.weldings.index', compact('weldings', 'users', 'products'));
     }
 
     public function create()

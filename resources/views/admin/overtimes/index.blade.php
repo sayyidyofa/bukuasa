@@ -15,36 +15,88 @@
     </div>
 
     <div class="card-body">
-        <table class=" table table-bordered table-striped table-hover ajaxTable datatable datatable-Overtime">
-            <thead>
-                <tr>
-                    <th width="10">
+        <div class="table-responsive">
+            <table class=" table table-bordered table-striped table-hover datatable datatable-Overtime">
+                <thead>
+                    <tr>
+                        <th width="10">
 
-                    </th>
-                    <th>
-                        {{ trans('cruds.overtime.fields.id') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.overtime.fields.user') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.overtime.fields.dept') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.overtime.fields.date') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.overtime.fields.start_hour') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.overtime.fields.end_hour') }}
-                    </th>
-                    <th>
-                        &nbsp;
-                    </th>
-                </tr>
-            </thead>
-        </table>
+                        </th>
+                        <th>
+                            {{ trans('cruds.overtime.fields.id') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.overtime.fields.user') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.overtime.fields.dept') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.overtime.fields.date') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.overtime.fields.start_hour') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.overtime.fields.end_hour') }}
+                        </th>
+                        <th>
+                            &nbsp;
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($overtimes as $key => $overtime)
+                        <tr data-entry-id="{{ $overtime->id }}">
+                            <td>
+
+                            </td>
+                            <td>
+                                {{ $overtime->id ?? '' }}
+                            </td>
+                            <td>
+                                {{ $overtime->user->name ?? '' }}
+                            </td>
+                            <td>
+                                {{ $overtime->dept ?? '' }}
+                            </td>
+                            <td>
+                                {{ $overtime->date ?? '' }}
+                            </td>
+                            <td>
+                                {{ $overtime->start_hour ?? '' }}
+                            </td>
+                            <td>
+                                {{ $overtime->end_hour ?? '' }}
+                            </td>
+                            <td>
+                                @can('overtime_show')
+                                    <a class="btn btn-xs btn-primary" href="{{ route('admin.overtimes.show', $overtime->id) }}">
+                                        {{ trans('global.view') }}
+                                    </a>
+                                @endcan
+
+                                @can('overtime_edit')
+                                    <a class="btn btn-xs btn-info" href="{{ route('admin.overtimes.edit', $overtime->id) }}">
+                                        {{ trans('global.edit') }}
+                                    </a>
+                                @endcan
+
+                                @can('overtime_delete')
+                                    <form action="{{ route('admin.overtimes.destroy', $overtime->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
+                                        <input type="hidden" name="_method" value="DELETE">
+                                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                        <input type="submit" class="btn btn-xs btn-danger" value="{{ trans('global.delete') }}">
+                                    </form>
+                                @endcan
+
+                            </td>
+
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
 
@@ -57,14 +109,14 @@
     $(function () {
   let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
 @can('overtime_delete')
-  let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
+  let deleteButtonTrans = '{{ trans('global.datatables.delete') }}'
   let deleteButton = {
     text: deleteButtonTrans,
     url: "{{ route('admin.overtimes.massDestroy') }}",
     className: 'btn-danger',
     action: function (e, dt, node, config) {
-      var ids = $.map(dt.rows({ selected: true }).data(), function (entry) {
-          return entry.id
+      var ids = $.map(dt.rows({ selected: true }).nodes(), function (entry) {
+          return $(entry).data('entry-id')
       });
 
       if (ids.length === 0) {
@@ -86,34 +138,18 @@
   dtButtons.push(deleteButton)
 @endcan
 
-  let dtOverrideGlobals = {
-    buttons: dtButtons,
-    processing: true,
-    serverSide: true,
-    retrieve: true,
-    aaSorting: [],
-    ajax: "{{ route('admin.overtimes.index') }}",
-    columns: [
-      { data: 'placeholder', name: 'placeholder' },
-{ data: 'id', name: 'id' },
-{ data: 'user_name', name: 'user.name' },
-{ data: 'dept', name: 'dept' },
-{ data: 'date', name: 'date' },
-{ data: 'start_hour', name: 'start_hour' },
-{ data: 'end_hour', name: 'end_hour' },
-{ data: 'actions', name: '{{ trans('global.actions') }}' }
-    ],
+  $.extend(true, $.fn.dataTable.defaults, {
     orderCellsTop: true,
-    order: [[ 1, 'desc' ]],
+    order: [[ 4, 'asc' ]],
     pageLength: 100,
-  };
-  let table = $('.datatable-Overtime').DataTable(dtOverrideGlobals);
+  });
+  let table = $('.datatable-Overtime:not(.ajaxTable)').DataTable({ buttons: dtButtons })
   $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e){
       $($.fn.dataTable.tables(true)).DataTable()
           .columns.adjust();
   });
   
-});
+})
 
 </script>
 @endsection

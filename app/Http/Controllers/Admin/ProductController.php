@@ -11,57 +11,18 @@ use App\Models\ProductCategory;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Yajra\DataTables\Facades\DataTables;
 
 class ProductController extends Controller
 {
-    public function index(Request $request)
+    public function index()
     {
         abort_if(Gate::denies('product_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        if ($request->ajax()) {
-            $query = Product::with(['product_category'])->select(sprintf('%s.*', (new Product)->table));
-            $table = Datatables::of($query);
-
-            $table->addColumn('placeholder', '&nbsp;');
-            $table->addColumn('actions', '&nbsp;');
-
-            $table->editColumn('actions', function ($row) {
-                $viewGate      = 'product_show';
-                $editGate      = 'product_edit';
-                $deleteGate    = 'product_delete';
-                $crudRoutePart = 'products';
-
-                return view('partials.datatablesActions', compact(
-                    'viewGate',
-                    'editGate',
-                    'deleteGate',
-                    'crudRoutePart',
-                    'row'
-                ));
-            });
-
-            $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : "";
-            });
-            $table->editColumn('name', function ($row) {
-                return $row->name ? $row->name : "";
-            });
-            $table->editColumn('rate_keping', function ($row) {
-                return $row->rate_keping ? $row->rate_keping : "";
-            });
-            $table->addColumn('product_category_name', function ($row) {
-                return $row->product_category ? $row->product_category->name : '';
-            });
-
-            $table->rawColumns(['actions', 'placeholder', 'product_category']);
-
-            return $table->make(true);
-        }
+        $products = Product::with(['product_category'])->get();
 
         $product_categories = ProductCategory::get();
 
-        return view('admin.products.index', compact('product_categories'));
+        return view('admin.products.index', compact('products', 'product_categories'));
     }
 
     public function create()

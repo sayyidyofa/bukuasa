@@ -10,55 +10,16 @@ use App\Models\Pelanggan;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Yajra\DataTables\Facades\DataTables;
 
 class PelangganController extends Controller
 {
-    public function index(Request $request)
+    public function index()
     {
         abort_if(Gate::denies('pelanggan_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        if ($request->ajax()) {
-            $query = Pelanggan::query()->select(sprintf('%s.*', (new Pelanggan)->table));
-            $table = Datatables::of($query);
+        $pelanggans = Pelanggan::all();
 
-            $table->addColumn('placeholder', '&nbsp;');
-            $table->addColumn('actions', '&nbsp;');
-
-            $table->editColumn('actions', function ($row) {
-                $viewGate      = 'pelanggan_show';
-                $editGate      = 'pelanggan_edit';
-                $deleteGate    = 'pelanggan_delete';
-                $crudRoutePart = 'pelanggans';
-
-                return view('partials.datatablesActions', compact(
-                    'viewGate',
-                    'editGate',
-                    'deleteGate',
-                    'crudRoutePart',
-                    'row'
-                ));
-            });
-
-            $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : "";
-            });
-            $table->editColumn('name', function ($row) {
-                return $row->name ? $row->name : "";
-            });
-            $table->editColumn('address', function ($row) {
-                return $row->address ? $row->address : "";
-            });
-            $table->editColumn('contact', function ($row) {
-                return $row->contact ? $row->contact : "";
-            });
-
-            $table->rawColumns(['actions', 'placeholder']);
-
-            return $table->make(true);
-        }
-
-        return view('admin.pelanggans.index');
+        return view('admin.pelanggans.index', compact('pelanggans'));
     }
 
     public function create()
