@@ -110,7 +110,7 @@
             </li>
         @endcan
         @can('penggajian_access')
-            <li class="c-sidebar-nav-dropdown {{ request()->is("admin/kasbons*") ? "c-show" : "" }}">
+            <li class="c-sidebar-nav-dropdown {{ request()->is("admin/kasbons*") ? "c-show" : "" }} {{ request()->is("admin/salaries*") ? "c-show" : "" }}">
                 <a class="c-sidebar-nav-dropdown-toggle" href="#">
                     <i class="fa-fw fas fa-dollar-sign c-sidebar-nav-icon">
 
@@ -125,6 +125,16 @@
 
                                 </i>
                                 {{ trans('cruds.kasbon.title') }}
+                            </a>
+                        </li>
+                    @endcan
+                    @can('salary_access')
+                        <li class="c-sidebar-nav-item">
+                            <a href="{{ route("admin.salaries.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/salaries") || request()->is("admin/salaries/*") ? "c-active" : "" }}">
+                                <i class="fa-fw fas fa-dollar-sign c-sidebar-nav-icon">
+
+                                </i>
+                                {{ trans('cruds.salary.title') }}
                             </a>
                         </li>
                     @endcan

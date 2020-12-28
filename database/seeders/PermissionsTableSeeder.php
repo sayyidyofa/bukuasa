@@ -344,6 +344,26 @@ class PermissionsTableSeeder extends Seeder
             ],
             [
                 'id'    => 84,
+                'title' => 'salary_create',
+            ],
+            [
+                'id'    => 85,
+                'title' => 'salary_edit',
+            ],
+            [
+                'id'    => 86,
+                'title' => 'salary_show',
+            ],
+            [
+                'id'    => 87,
+                'title' => 'salary_delete',
+            ],
+            [
+                'id'    => 88,
+                'title' => 'salary_access',
+            ],
+            [
+                'id'    => 89,
                 'title' => 'profile_password_edit',
             ],
         ];
