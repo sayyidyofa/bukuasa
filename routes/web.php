@@ -81,6 +81,10 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     // Kasbons
     Route::delete('kasbons/destroy', 'KasbonController@massDestroy')->name('kasbons.massDestroy');
     Route::resource('kasbons', 'KasbonController');
+
+    // Salaries
+    Route::delete('salaries/destroy', 'SalaryController@massDestroy')->name('salaries.massDestroy');
+    Route::resource('salaries', 'SalaryController');
 });
 Route::group(['prefix' => 'profile', 'as' => 'profile.', 'namespace' => 'Auth', 'middleware' => ['auth']], function () {
 // Change password

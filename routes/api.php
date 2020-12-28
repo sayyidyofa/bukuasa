@@ -48,4 +48,7 @@ Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Admin', '
 
     // Kasbons
     Route::apiResource('kasbons', 'KasbonApiController');
+
+    // Salaries
+    Route::apiResource('salaries', 'SalaryApiController');
 });
