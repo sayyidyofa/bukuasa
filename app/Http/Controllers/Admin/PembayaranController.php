@@ -14,75 +14,22 @@ use Gate;
 use Illuminate\Http\Request;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
-use Yajra\DataTables\Facades\DataTables;
 
 class PembayaranController extends Controller
 {
     use MediaUploadingTrait;
 
-    public function index(Request $request)
+    public function index()
     {
         abort_if(Gate::denies('pembayaran_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        if ($request->ajax()) {
-            $query = Pembayaran::with(['faktur', 'customer'])->select(sprintf('%s.*', (new Pembayaran)->table));
-            $table = Datatables::of($query);
+        $pembayarans = Pembayaran::with(['faktur', 'customer', 'media'])->get();
 
-            $table->addColumn('placeholder', '&nbsp;');
-            $table->addColumn('actions', '&nbsp;');
+        $fakturs = Faktur::get();
 
-            $table->editColumn('actions', function ($row) {
-                $viewGate      = 'pembayaran_show';
-                $editGate      = 'pembayaran_edit';
-                $deleteGate    = 'pembayaran_delete';
-                $crudRoutePart = 'pembayarans';
-
-                return view('partials.datatablesActions', compact(
-                    'viewGate',
-                    'editGate',
-                    'deleteGate',
-                    'crudRoutePart',
-                    'row'
-                ));
-            });
-
-            $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : "";
-            });
-            $table->addColumn('faktur_no_faktur', function ($row) {
-                return $row->faktur ? $row->faktur->no_faktur : '';
-            });
-
-            $table->addColumn('customer_name', function ($row) {
-                return $row->customer ? $row->customer->name : '';
-            });
-
-            $table->editColumn('type', function ($row) {
-                return $row->type ? Pembayaran::TYPE_RADIO[$row->type] : '';
-            });
-            $table->editColumn('holder', function ($row) {
-                return $row->holder ? Pembayaran::HOLDER_RADIO[$row->holder] : '';
-            });
-            $table->editColumn('nth_payment', function ($row) {
-                return $row->nth_payment ? $row->nth_payment : "";
-            });
-            $table->editColumn('nominal', function ($row) {
-                return $row->nominal ? $row->nominal : "";
-            });
-
-            $table->editColumn('keterangan', function ($row) {
-                return $row->keterangan ? $row->keterangan : "";
-            });
-
-            $table->rawColumns(['actions', 'placeholder', 'faktur', 'customer']);
-
-            return $table->make(true);
-        }
-
-        $fakturs    = Faktur::get();
         $pelanggans = Pelanggan::get();
 
-        return view('admin.pembayarans.index', compact('fakturs', 'pelanggans'));
+        return view('admin.pembayarans.index', compact('pembayarans', 'fakturs', 'pelanggans'));
     }
 
     public function create()

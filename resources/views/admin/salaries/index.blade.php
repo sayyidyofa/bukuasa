@@ -15,39 +15,94 @@
     </div>
 
     <div class="card-body">
-        <table class=" table table-bordered table-striped table-hover ajaxTable datatable datatable-Salary">
-            <thead>
-                <tr>
-                    <th width="10">
+        <div class="table-responsive">
+            <table class=" table table-bordered table-striped table-hover datatable datatable-Salary">
+                <thead>
+                    <tr>
+                        <th width="10">
 
-                    </th>
-                    <th>
-                        {{ trans('cruds.salary.fields.id') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.salary.fields.user') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.salary.fields.nominal') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.salary.fields.markup') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.salary.fields.keterangan') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.salary.fields.from') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.salary.fields.to') }}
-                    </th>
-                    <th>
-                        &nbsp;
-                    </th>
-                </tr>
-            </thead>
-        </table>
+                        </th>
+                        <th>
+                            {{ trans('cruds.salary.fields.id') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.salary.fields.user') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.salary.fields.nominal') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.salary.fields.markup') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.salary.fields.keterangan') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.salary.fields.from') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.salary.fields.to') }}
+                        </th>
+                        <th>
+                            &nbsp;
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($salaries as $key => $salary)
+                        <tr data-entry-id="{{ $salary->id }}">
+                            <td>
+
+                            </td>
+                            <td>
+                                {{ $salary->id ?? '' }}
+                            </td>
+                            <td>
+                                {{ $salary->user->name ?? '' }}
+                            </td>
+                            <td>
+                                {{ $salary->nominal ?? '' }}
+                            </td>
+                            <td>
+                                {{ $salary->markup ?? '' }}
+                            </td>
+                            <td>
+                                {{ $salary->keterangan ?? '' }}
+                            </td>
+                            <td>
+                                {{ $salary->from ?? '' }}
+                            </td>
+                            <td>
+                                {{ $salary->to ?? '' }}
+                            </td>
+                            <td>
+                                @can('salary_show')
+                                    <a class="btn btn-xs btn-primary" href="{{ route('admin.salaries.show', $salary->id) }}">
+                                        {{ trans('global.view') }}
+                                    </a>
+                                @endcan
+
+                                @can('salary_edit')
+                                    <a class="btn btn-xs btn-info" href="{{ route('admin.salaries.edit', $salary->id) }}">
+                                        {{ trans('global.edit') }}
+                                    </a>
+                                @endcan
+
+                                @can('salary_delete')
+                                    <form action="{{ route('admin.salaries.destroy', $salary->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
+                                        <input type="hidden" name="_method" value="DELETE">
+                                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                        <input type="submit" class="btn btn-xs btn-danger" value="{{ trans('global.delete') }}">
+                                    </form>
+                                @endcan
+
+                            </td>
+
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
 
@@ -60,14 +115,14 @@
     $(function () {
   let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
 @can('salary_delete')
-  let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
+  let deleteButtonTrans = '{{ trans('global.datatables.delete') }}'
   let deleteButton = {
     text: deleteButtonTrans,
     url: "{{ route('admin.salaries.massDestroy') }}",
     className: 'btn-danger',
     action: function (e, dt, node, config) {
-      var ids = $.map(dt.rows({ selected: true }).data(), function (entry) {
-          return entry.id
+      var ids = $.map(dt.rows({ selected: true }).nodes(), function (entry) {
+          return $(entry).data('entry-id')
       });
 
       if (ids.length === 0) {
@@ -89,35 +144,18 @@
   dtButtons.push(deleteButton)
 @endcan
 
-  let dtOverrideGlobals = {
-    buttons: dtButtons,
-    processing: true,
-    serverSide: true,
-    retrieve: true,
-    aaSorting: [],
-    ajax: "{{ route('admin.salaries.index') }}",
-    columns: [
-      { data: 'placeholder', name: 'placeholder' },
-{ data: 'id', name: 'id' },
-{ data: 'user_name', name: 'user.name' },
-{ data: 'nominal', name: 'nominal' },
-{ data: 'markup', name: 'markup' },
-{ data: 'keterangan', name: 'keterangan' },
-{ data: 'from', name: 'from' },
-{ data: 'to', name: 'to' },
-{ data: 'actions', name: '{{ trans('global.actions') }}' }
-    ],
+  $.extend(true, $.fn.dataTable.defaults, {
     orderCellsTop: true,
-    order: [[ 1, 'desc' ]],
+    order: [[ 1, 'asc' ]],
     pageLength: 100,
-  };
-  let table = $('.datatable-Salary').DataTable(dtOverrideGlobals);
+  });
+  let table = $('.datatable-Salary:not(.ajaxTable)').DataTable({ buttons: dtButtons })
   $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e){
       $($.fn.dataTable.tables(true)).DataTable()
           .columns.adjust();
   });
   
-});
+})
 
 </script>
 @endsection

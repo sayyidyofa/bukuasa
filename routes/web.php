@@ -85,6 +85,28 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     // Salaries
     Route::delete('salaries/destroy', 'SalaryController@massDestroy')->name('salaries.massDestroy');
     Route::resource('salaries', 'SalaryController');
+
+    // Content Categories
+    Route::delete('content-categories/destroy', 'ContentCategoryController@massDestroy')->name('content-categories.massDestroy');
+    Route::resource('content-categories', 'ContentCategoryController');
+
+    // Content Tags
+    Route::delete('content-tags/destroy', 'ContentTagController@massDestroy')->name('content-tags.massDestroy');
+    Route::resource('content-tags', 'ContentTagController');
+
+    // Content Pages
+    Route::delete('content-pages/destroy', 'ContentPageController@massDestroy')->name('content-pages.massDestroy');
+    Route::post('content-pages/media', 'ContentPageController@storeMedia')->name('content-pages.storeMedia');
+    Route::post('content-pages/ckmedia', 'ContentPageController@storeCKEditorImages')->name('content-pages.storeCKEditorImages');
+    Route::resource('content-pages', 'ContentPageController');
+
+    // Faq Categories
+    Route::delete('faq-categories/destroy', 'FaqCategoryController@massDestroy')->name('faq-categories.massDestroy');
+    Route::resource('faq-categories', 'FaqCategoryController');
+
+    // Faq Questions
+    Route::delete('faq-questions/destroy', 'FaqQuestionController@massDestroy')->name('faq-questions.massDestroy');
+    Route::resource('faq-questions', 'FaqQuestionController');
 });
 Route::group(['prefix' => 'profile', 'as' => 'profile.', 'namespace' => 'Auth', 'middleware' => ['auth']], function () {
 // Change password

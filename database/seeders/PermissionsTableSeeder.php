@@ -364,6 +364,114 @@ class PermissionsTableSeeder extends Seeder
             ],
             [
                 'id'    => 89,
+                'title' => 'content_management_access',
+            ],
+            [
+                'id'    => 90,
+                'title' => 'content_category_create',
+            ],
+            [
+                'id'    => 91,
+                'title' => 'content_category_edit',
+            ],
+            [
+                'id'    => 92,
+                'title' => 'content_category_show',
+            ],
+            [
+                'id'    => 93,
+                'title' => 'content_category_delete',
+            ],
+            [
+                'id'    => 94,
+                'title' => 'content_category_access',
+            ],
+            [
+                'id'    => 95,
+                'title' => 'content_tag_create',
+            ],
+            [
+                'id'    => 96,
+                'title' => 'content_tag_edit',
+            ],
+            [
+                'id'    => 97,
+                'title' => 'content_tag_show',
+            ],
+            [
+                'id'    => 98,
+                'title' => 'content_tag_delete',
+            ],
+            [
+                'id'    => 99,
+                'title' => 'content_tag_access',
+            ],
+            [
+                'id'    => 100,
+                'title' => 'content_page_create',
+            ],
+            [
+                'id'    => 101,
+                'title' => 'content_page_edit',
+            ],
+            [
+                'id'    => 102,
+                'title' => 'content_page_show',
+            ],
+            [
+                'id'    => 103,
+                'title' => 'content_page_delete',
+            ],
+            [
+                'id'    => 104,
+                'title' => 'content_page_access',
+            ],
+            [
+                'id'    => 105,
+                'title' => 'faq_management_access',
+            ],
+            [
+                'id'    => 106,
+                'title' => 'faq_category_create',
+            ],
+            [
+                'id'    => 107,
+                'title' => 'faq_category_edit',
+            ],
+            [
+                'id'    => 108,
+                'title' => 'faq_category_show',
+            ],
+            [
+                'id'    => 109,
+                'title' => 'faq_category_delete',
+            ],
+            [
+                'id'    => 110,
+                'title' => 'faq_category_access',
+            ],
+            [
+                'id'    => 111,
+                'title' => 'faq_question_create',
+            ],
+            [
+                'id'    => 112,
+                'title' => 'faq_question_edit',
+            ],
+            [
+                'id'    => 113,
+                'title' => 'faq_question_show',
+            ],
+            [
+                'id'    => 114,
+                'title' => 'faq_question_delete',
+            ],
+            [
+                'id'    => 115,
+                'title' => 'faq_question_access',
+            ],
+            [
+                'id'    => 116,
                 'title' => 'profile_password_edit',
             ],
         ];

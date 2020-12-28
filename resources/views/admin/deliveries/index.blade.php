@@ -15,33 +15,84 @@
     </div>
 
     <div class="card-body">
-        <table class=" table table-bordered table-striped table-hover ajaxTable datatable datatable-Delivery">
-            <thead>
-                <tr>
-                    <th width="10">
+        <div class="table-responsive">
+            <table class=" table table-bordered table-striped table-hover datatable datatable-Delivery">
+                <thead>
+                    <tr>
+                        <th width="10">
 
-                    </th>
-                    <th>
-                        {{ trans('cruds.delivery.fields.id') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.delivery.fields.date') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.delivery.fields.distance_type') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.delivery.fields.weight_type') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.delivery.fields.faktur') }}
-                    </th>
-                    <th>
-                        &nbsp;
-                    </th>
-                </tr>
-            </thead>
-        </table>
+                        </th>
+                        <th>
+                            {{ trans('cruds.delivery.fields.id') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.delivery.fields.date') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.delivery.fields.distance_type') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.delivery.fields.weight_type') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.delivery.fields.faktur') }}
+                        </th>
+                        <th>
+                            &nbsp;
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($deliveries as $key => $delivery)
+                        <tr data-entry-id="{{ $delivery->id }}">
+                            <td>
+
+                            </td>
+                            <td>
+                                {{ $delivery->id ?? '' }}
+                            </td>
+                            <td>
+                                {{ $delivery->date ?? '' }}
+                            </td>
+                            <td>
+                                {{ App\Models\Delivery::DISTANCE_TYPE_RADIO[$delivery->distance_type] ?? '' }}
+                            </td>
+                            <td>
+                                {{ App\Models\Delivery::WEIGHT_TYPE_RADIO[$delivery->weight_type] ?? '' }}
+                            </td>
+                            <td>
+                                @foreach($delivery->fakturs as $key => $item)
+                                    <span class="badge badge-info">{{ $item->no_faktur }}</span>
+                                @endforeach
+                            </td>
+                            <td>
+                                @can('delivery_show')
+                                    <a class="btn btn-xs btn-primary" href="{{ route('admin.deliveries.show', $delivery->id) }}">
+                                        {{ trans('global.view') }}
+                                    </a>
+                                @endcan
+
+                                @can('delivery_edit')
+                                    <a class="btn btn-xs btn-info" href="{{ route('admin.deliveries.edit', $delivery->id) }}">
+                                        {{ trans('global.edit') }}
+                                    </a>
+                                @endcan
+
+                                @can('delivery_delete')
+                                    <form action="{{ route('admin.deliveries.destroy', $delivery->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
+                                        <input type="hidden" name="_method" value="DELETE">
+                                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                        <input type="submit" class="btn btn-xs btn-danger" value="{{ trans('global.delete') }}">
+                                    </form>
+                                @endcan
+
+                            </td>
+
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
 
@@ -54,14 +105,14 @@
     $(function () {
   let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
 @can('delivery_delete')
-  let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
+  let deleteButtonTrans = '{{ trans('global.datatables.delete') }}'
   let deleteButton = {
     text: deleteButtonTrans,
     url: "{{ route('admin.deliveries.massDestroy') }}",
     className: 'btn-danger',
     action: function (e, dt, node, config) {
-      var ids = $.map(dt.rows({ selected: true }).data(), function (entry) {
-          return entry.id
+      var ids = $.map(dt.rows({ selected: true }).nodes(), function (entry) {
+          return $(entry).data('entry-id')
       });
 
       if (ids.length === 0) {
@@ -83,33 +134,18 @@
   dtButtons.push(deleteButton)
 @endcan
 
-  let dtOverrideGlobals = {
-    buttons: dtButtons,
-    processing: true,
-    serverSide: true,
-    retrieve: true,
-    aaSorting: [],
-    ajax: "{{ route('admin.deliveries.index') }}",
-    columns: [
-      { data: 'placeholder', name: 'placeholder' },
-{ data: 'id', name: 'id' },
-{ data: 'date', name: 'date' },
-{ data: 'distance_type', name: 'distance_type' },
-{ data: 'weight_type', name: 'weight_type' },
-{ data: 'faktur', name: 'fakturs.no_faktur' },
-{ data: 'actions', name: '{{ trans('global.actions') }}' }
-    ],
+  $.extend(true, $.fn.dataTable.defaults, {
     orderCellsTop: true,
-    order: [[ 2, 'desc' ]],
+    order: [[ 2, 'asc' ]],
     pageLength: 100,
-  };
-  let table = $('.datatable-Delivery').DataTable(dtOverrideGlobals);
+  });
+  let table = $('.datatable-Delivery:not(.ajaxTable)').DataTable({ buttons: dtButtons })
   $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e){
       $($.fn.dataTable.tables(true)).DataTable()
           .columns.adjust();
   });
   
-});
+})
 
 </script>
 @endsection

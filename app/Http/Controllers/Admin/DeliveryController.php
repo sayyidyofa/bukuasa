@@ -11,62 +11,16 @@ use App\Models\Faktur;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Yajra\DataTables\Facades\DataTables;
 
 class DeliveryController extends Controller
 {
-    public function index(Request $request)
+    public function index()
     {
         abort_if(Gate::denies('delivery_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        if ($request->ajax()) {
-            $query = Delivery::with(['fakturs'])->select(sprintf('%s.*', (new Delivery)->table));
-            $table = Datatables::of($query);
+        $deliveries = Delivery::with(['fakturs'])->get();
 
-            $table->addColumn('placeholder', '&nbsp;');
-            $table->addColumn('actions', '&nbsp;');
-
-            $table->editColumn('actions', function ($row) {
-                $viewGate      = 'delivery_show';
-                $editGate      = 'delivery_edit';
-                $deleteGate    = 'delivery_delete';
-                $crudRoutePart = 'deliveries';
-
-                return view('partials.datatablesActions', compact(
-                    'viewGate',
-                    'editGate',
-                    'deleteGate',
-                    'crudRoutePart',
-                    'row'
-                ));
-            });
-
-            $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : "";
-            });
-
-            $table->editColumn('distance_type', function ($row) {
-                return $row->distance_type ? Delivery::DISTANCE_TYPE_RADIO[$row->distance_type] : '';
-            });
-            $table->editColumn('weight_type', function ($row) {
-                return $row->weight_type ? Delivery::WEIGHT_TYPE_RADIO[$row->weight_type] : '';
-            });
-            $table->editColumn('faktur', function ($row) {
-                $labels = [];
-
-                foreach ($row->fakturs as $faktur) {
-                    $labels[] = sprintf('<span class="label label-info label-many">%s</span>', $faktur->no_faktur);
-                }
-
-                return implode(' ', $labels);
-            });
-
-            $table->rawColumns(['actions', 'placeholder', 'faktur']);
-
-            return $table->make(true);
-        }
-
-        return view('admin.deliveries.index');
+        return view('admin.deliveries.index', compact('deliveries'));
     }
 
     public function create()

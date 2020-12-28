@@ -112,7 +112,7 @@
         @can('penggajian_access')
             <li class="c-sidebar-nav-dropdown {{ request()->is("admin/kasbons*") ? "c-show" : "" }} {{ request()->is("admin/salaries*") ? "c-show" : "" }}">
                 <a class="c-sidebar-nav-dropdown-toggle" href="#">
-                    <i class="fa-fw fas fa-dollar-sign c-sidebar-nav-icon">
+                    <i class="fa-fw fas fa-hand-holding-usd c-sidebar-nav-icon">
 
                     </i>
                     {{ trans('cruds.penggajian.title') }}
@@ -131,7 +131,7 @@
                     @can('salary_access')
                         <li class="c-sidebar-nav-item">
                             <a href="{{ route("admin.salaries.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/salaries") || request()->is("admin/salaries/*") ? "c-active" : "" }}">
-                                <i class="fa-fw fas fa-dollar-sign c-sidebar-nav-icon">
+                                <i class="fa-fw fas fa-hand-holding-usd c-sidebar-nav-icon">
 
                                 </i>
                                 {{ trans('cruds.salary.title') }}
@@ -144,7 +144,7 @@
         @can('pemasukan_access')
             <li class="c-sidebar-nav-dropdown {{ request()->is("admin/fakturs*") ? "c-show" : "" }} {{ request()->is("admin/pembayarans*") ? "c-show" : "" }} {{ request()->is("admin/carts*") ? "c-show" : "" }}">
                 <a class="c-sidebar-nav-dropdown-toggle" href="#">
-                    <i class="fa-fw fas fa-hand-holding-usd c-sidebar-nav-icon">
+                    <i class="fa-fw fas fa-dollar-sign c-sidebar-nav-icon">
 
                     </i>
                     {{ trans('cruds.pemasukan.title') }}
@@ -239,6 +239,80 @@
 
                                 </i>
                                 {{ trans('cruds.auditLog.title') }}
+                            </a>
+                        </li>
+                    @endcan
+                </ul>
+            </li>
+        @endcan
+        @can('content_management_access')
+            <li class="c-sidebar-nav-dropdown {{ request()->is("admin/content-categories*") ? "c-show" : "" }} {{ request()->is("admin/content-tags*") ? "c-show" : "" }} {{ request()->is("admin/content-pages*") ? "c-show" : "" }}">
+                <a class="c-sidebar-nav-dropdown-toggle" href="#">
+                    <i class="fa-fw fas fa-book c-sidebar-nav-icon">
+
+                    </i>
+                    {{ trans('cruds.contentManagement.title') }}
+                </a>
+                <ul class="c-sidebar-nav-dropdown-items">
+                    @can('content_category_access')
+                        <li class="c-sidebar-nav-item">
+                            <a href="{{ route("admin.content-categories.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/content-categories") || request()->is("admin/content-categories/*") ? "c-active" : "" }}">
+                                <i class="fa-fw fas fa-folder c-sidebar-nav-icon">
+
+                                </i>
+                                {{ trans('cruds.contentCategory.title') }}
+                            </a>
+                        </li>
+                    @endcan
+                    @can('content_tag_access')
+                        <li class="c-sidebar-nav-item">
+                            <a href="{{ route("admin.content-tags.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/content-tags") || request()->is("admin/content-tags/*") ? "c-active" : "" }}">
+                                <i class="fa-fw fas fa-tags c-sidebar-nav-icon">
+
+                                </i>
+                                {{ trans('cruds.contentTag.title') }}
+                            </a>
+                        </li>
+                    @endcan
+                    @can('content_page_access')
+                        <li class="c-sidebar-nav-item">
+                            <a href="{{ route("admin.content-pages.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/content-pages") || request()->is("admin/content-pages/*") ? "c-active" : "" }}">
+                                <i class="fa-fw fas fa-file c-sidebar-nav-icon">
+
+                                </i>
+                                {{ trans('cruds.contentPage.title') }}
+                            </a>
+                        </li>
+                    @endcan
+                </ul>
+            </li>
+        @endcan
+        @can('faq_management_access')
+            <li class="c-sidebar-nav-dropdown {{ request()->is("admin/faq-categories*") ? "c-show" : "" }} {{ request()->is("admin/faq-questions*") ? "c-show" : "" }}">
+                <a class="c-sidebar-nav-dropdown-toggle" href="#">
+                    <i class="fa-fw fas fa-question c-sidebar-nav-icon">
+
+                    </i>
+                    {{ trans('cruds.faqManagement.title') }}
+                </a>
+                <ul class="c-sidebar-nav-dropdown-items">
+                    @can('faq_category_access')
+                        <li class="c-sidebar-nav-item">
+                            <a href="{{ route("admin.faq-categories.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/faq-categories") || request()->is("admin/faq-categories/*") ? "c-active" : "" }}">
+                                <i class="fa-fw fas fa-briefcase c-sidebar-nav-icon">
+
+                                </i>
+                                {{ trans('cruds.faqCategory.title') }}
+                            </a>
+                        </li>
+                    @endcan
+                    @can('faq_question_access')
+                        <li class="c-sidebar-nav-item">
+                            <a href="{{ route("admin.faq-questions.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/faq-questions") || request()->is("admin/faq-questions/*") ? "c-active" : "" }}">
+                                <i class="fa-fw fas fa-question c-sidebar-nav-icon">
+
+                                </i>
+                                {{ trans('cruds.faqQuestion.title') }}
                             </a>
                         </li>
                     @endcan
