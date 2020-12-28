@@ -7,6 +7,7 @@ use App\Http\Requests\MassDestroyProductRequest;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
 use App\Models\Product;
+use App\Models\ProductCategory;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,7 +20,7 @@ class ProductController extends Controller
         abort_if(Gate::denies('product_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = Product::query()->select(sprintf('%s.*', (new Product)->table));
+            $query = Product::with(['product_category'])->select(sprintf('%s.*', (new Product)->table));
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -49,20 +50,27 @@ class ProductController extends Controller
             $table->editColumn('rate_keping', function ($row) {
                 return $row->rate_keping ? $row->rate_keping : "";
             });
+            $table->addColumn('product_category_name', function ($row) {
+                return $row->product_category ? $row->product_category->name : '';
+            });
 
-            $table->rawColumns(['actions', 'placeholder']);
+            $table->rawColumns(['actions', 'placeholder', 'product_category']);
 
             return $table->make(true);
         }
 
-        return view('admin.products.index');
+        $product_categories = ProductCategory::get();
+
+        return view('admin.products.index', compact('product_categories'));
     }
 
     public function create()
     {
         abort_if(Gate::denies('product_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return view('admin.products.create');
+        $product_categories = ProductCategory::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        return view('admin.products.create', compact('product_categories'));
     }
 
     public function store(StoreProductRequest $request)
@@ -76,7 +84,11 @@ class ProductController extends Controller
     {
         abort_if(Gate::denies('product_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return view('admin.products.edit', compact('product'));
+        $product_categories = ProductCategory::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        $product->load('product_category');
+
+        return view('admin.products.edit', compact('product_categories', 'product'));
     }
 
     public function update(UpdateProductRequest $request, Product $product)
@@ -90,7 +102,7 @@ class ProductController extends Controller
     {
         abort_if(Gate::denies('product_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $product->load('productCarts');
+        $product->load('product_category', 'productCarts');
 
         return view('admin.products.show', compact('product'));
     }

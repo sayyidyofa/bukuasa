@@ -8,35 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use \DateTimeInterface;
 
-/**
- * App\Models\Delivery
- *
- * @property int $id
- * @property \Illuminate\Support\Carbon $date
- * @property string $distance_type
- * @property string $weight_type
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
- * @property \Illuminate\Support\Carbon|null $deleted_at
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Crew[] $deliveryCrews
- * @property-read int|null $delivery_crews_count
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Faktur[] $fakturs
- * @property-read int|null $fakturs_count
- * @method static \Illuminate\Database\Eloquent\Builder|Delivery newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Delivery newQuery()
- * @method static \Illuminate\Database\Query\Builder|Delivery onlyTrashed()
- * @method static \Illuminate\Database\Eloquent\Builder|Delivery query()
- * @method static \Illuminate\Database\Eloquent\Builder|Delivery whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Delivery whereDate($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Delivery whereDeletedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Delivery whereDistanceType($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Delivery whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Delivery whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Delivery whereWeightType($value)
- * @method static \Illuminate\Database\Query\Builder|Delivery withTrashed()
- * @method static \Illuminate\Database\Query\Builder|Delivery withoutTrashed()
- * @mixin \Eloquent
- */
 class Delivery extends Model
 {
     use SoftDeletes, HasFactory;

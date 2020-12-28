@@ -17,12 +17,16 @@ class UpdateProductRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'        => [
+            'name'                => [
                 'string',
                 'required',
             ],
-            'rate_keping' => [
+            'rate_keping'         => [
                 'required',
+            ],
+            'product_category_id' => [
+                'required',
+                'integer',
             ],
         ];
     }

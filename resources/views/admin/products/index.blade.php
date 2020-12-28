@@ -31,6 +31,9 @@
                         {{ trans('cruds.product.fields.rate_keping') }}
                     </th>
                     <th>
+                        {{ trans('cruds.product.fields.product_category') }}
+                    </th>
+                    <th>
                         &nbsp;
                     </th>
                 </tr>
@@ -45,6 +48,14 @@
                     </td>
                     <td>
                         <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                    </td>
+                    <td>
+                        <select class="search">
+                            <option value>{{ trans('global.all') }}</option>
+                            @foreach($product_categories as $key => $item)
+                                <option value="{{ $item->name }}">{{ $item->name }}</option>
+                            @endforeach
+                        </select>
                     </td>
                     <td>
                     </td>
@@ -104,6 +115,7 @@
 { data: 'id', name: 'id' },
 { data: 'name', name: 'name' },
 { data: 'rate_keping', name: 'rate_keping' },
+{ data: 'product_category_name', name: 'product_category.name' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
     orderCellsTop: true,
