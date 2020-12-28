@@ -90,6 +90,8 @@ class ProductCategoryController extends Controller
     {
         abort_if(Gate::denies('product_category_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
+        $productCategory->load('productCategoryProducts');
+
         return view('admin.productCategories.show', compact('productCategory'));
     }
 

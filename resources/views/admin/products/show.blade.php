@@ -39,6 +39,14 @@
                             {{ $product->rate_keping }}
                         </td>
                     </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.product.fields.product_category') }}
+                        </th>
+                        <td>
+                            {{ $product->product_category->name ?? '' }}
+                        </td>
+                    </tr>
                 </tbody>
             </table>
             <div class="form-group">

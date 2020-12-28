@@ -30,6 +30,20 @@
                 <span class="help-block">{{ trans('cruds.product.fields.rate_keping_helper') }}</span>
             </div>
             <div class="form-group">
+                <label class="required" for="product_category_id">{{ trans('cruds.product.fields.product_category') }}</label>
+                <select class="form-control select2 {{ $errors->has('product_category') ? 'is-invalid' : '' }}" name="product_category_id" id="product_category_id" required>
+                    @foreach($product_categories as $id => $product_category)
+                        <option value="{{ $id }}" {{ old('product_category_id') == $id ? 'selected' : '' }}>{{ $product_category }}</option>
+                    @endforeach
+                </select>
+                @if($errors->has('product_category'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('product_category') }}
+                    </div>
+                @endif
+                <span class="help-block">{{ trans('cruds.product.fields.product_category_helper') }}</span>
+            </div>
+            <div class="form-group">
                 <button class="btn btn-danger" type="submit">
                     {{ trans('global.save') }}
                 </button>
