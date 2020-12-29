@@ -8,6 +8,7 @@ use App\Http\Requests\MassDestroyFakturRequest;
 use App\Http\Requests\StoreFakturRequest;
 use App\Http\Requests\UpdateFakturRequest;
 use App\Models\Faktur;
+use App\Models\Pelanggan;
 use Gate;
 use Illuminate\Http\Request;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
@@ -21,16 +22,20 @@ class FakturController extends Controller
     {
         abort_if(Gate::denies('faktur_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $fakturs = Faktur::with(['media'])->get();
+        $fakturs = Faktur::with(['pelanggan', 'media'])->get();
 
-        return view('admin.fakturs.index', compact('fakturs'));
+        $pelanggans = Pelanggan::get();
+
+        return view('admin.fakturs.index', compact('fakturs', 'pelanggans'));
     }
 
     public function create()
     {
         abort_if(Gate::denies('faktur_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return view('admin.fakturs.create');
+        $pelanggans = Pelanggan::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        return view('admin.fakturs.create', compact('pelanggans'));
     }
 
     public function store(StoreFakturRequest $request)
@@ -52,7 +57,11 @@ class FakturController extends Controller
     {
         abort_if(Gate::denies('faktur_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return view('admin.fakturs.edit', compact('faktur'));
+        $pelanggans = Pelanggan::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        $faktur->load('pelanggan');
+
+        return view('admin.fakturs.edit', compact('pelanggans', 'faktur'));
     }
 
     public function update(UpdateFakturRequest $request, Faktur $faktur)
@@ -78,7 +87,7 @@ class FakturController extends Controller
     {
         abort_if(Gate::denies('faktur_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $faktur->load('fakturCarts', 'fakturPembayarans', 'fakturDeliveries');
+        $faktur->load('pelanggan', 'fakturCarts', 'fakturPembayarans', 'fakturDeliveries');
 
         return view('admin.fakturs.show', compact('faktur'));
     }

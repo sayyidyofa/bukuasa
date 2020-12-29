@@ -25,6 +25,14 @@
                     </tr>
                     <tr>
                         <th>
+                            {{ trans('cruds.faktur.fields.pelanggan') }}
+                        </th>
+                        <td>
+                            {{ $faktur->pelanggan->name ?? '' }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
                             {{ trans('cruds.faktur.fields.no_faktur') }}
                         </th>
                         <td>

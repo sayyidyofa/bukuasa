@@ -165,6 +165,8 @@ return [
             'deleted_at_helper'    => ' ',
             'photo'                => 'Foto Faktur',
             'photo_helper'         => ' ',
+            'pelanggan'            => 'Pelanggan',
+            'pelanggan_helper'     => ' ',
         ],
     ],
     'pembayaran'        => [

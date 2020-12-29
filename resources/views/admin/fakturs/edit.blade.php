@@ -11,6 +11,20 @@
             @method('PUT')
             @csrf
             <div class="form-group">
+                <label class="required" for="pelanggan_id">{{ trans('cruds.faktur.fields.pelanggan') }}</label>
+                <select class="form-control select2 {{ $errors->has('pelanggan') ? 'is-invalid' : '' }}" name="pelanggan_id" id="pelanggan_id" required>
+                    @foreach($pelanggans as $id => $pelanggan)
+                        <option value="{{ $id }}" {{ (old('pelanggan_id') ? old('pelanggan_id') : $faktur->pelanggan->id ?? '') == $id ? 'selected' : '' }}>{{ $pelanggan }}</option>
+                    @endforeach
+                </select>
+                @if($errors->has('pelanggan'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('pelanggan') }}
+                    </div>
+                @endif
+                <span class="help-block">{{ trans('cruds.faktur.fields.pelanggan_helper') }}</span>
+            </div>
+            <div class="form-group">
                 <label class="required" for="no_faktur">{{ trans('cruds.faktur.fields.no_faktur') }}</label>
                 <input class="form-control {{ $errors->has('no_faktur') ? 'is-invalid' : '' }}" type="number" name="no_faktur" id="no_faktur" value="{{ old('no_faktur', $faktur->no_faktur) }}" step="1" required>
                 @if($errors->has('no_faktur'))

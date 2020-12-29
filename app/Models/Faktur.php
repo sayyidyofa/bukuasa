@@ -30,6 +30,7 @@ class Faktur extends Model implements HasMedia
     ];
 
     protected $fillable = [
+        'pelanggan_id',
         'no_faktur',
         'tgl_faktur',
         'tagihan',
@@ -69,6 +70,11 @@ class Faktur extends Model implements HasMedia
     public function fakturDeliveries()
     {
         return $this->belongsToMany(Delivery::class);
+    }
+
+    public function pelanggan()
+    {
+        return $this->belongsTo(Pelanggan::class, 'pelanggan_id');
     }
 
     public function getTglFakturAttribute($value)
