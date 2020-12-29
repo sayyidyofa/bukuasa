@@ -21,10 +21,6 @@ class UpdatePembayaranRequest extends FormRequest
                 'required',
                 'integer',
             ],
-            'customer_id'  => [
-                'required',
-                'integer',
-            ],
             'type'         => [
                 'required',
             ],

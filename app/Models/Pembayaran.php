@@ -45,7 +45,6 @@ class Pembayaran extends Model implements HasMedia
 
     protected $fillable = [
         'faktur_id',
-        'customer_id',
         'type',
         'holder',
         'nth_payment',
@@ -77,11 +76,6 @@ class Pembayaran extends Model implements HasMedia
     public function faktur()
     {
         return $this->belongsTo(Faktur::class, 'faktur_id');
-    }
-
-    public function customer()
-    {
-        return $this->belongsTo(Pelanggan::class, 'customer_id');
     }
 
     public function getPaymentDateAttribute($value)

@@ -29,9 +29,6 @@
                             {{ trans('cruds.pembayaran.fields.faktur') }}
                         </th>
                         <th>
-                            {{ trans('cruds.pembayaran.fields.customer') }}
-                        </th>
-                        <th>
                             {{ trans('cruds.pembayaran.fields.type') }}
                         </th>
                         <th>
@@ -64,14 +61,6 @@
                                 <option value>{{ trans('global.all') }}</option>
                                 @foreach($fakturs as $key => $item)
                                     <option value="{{ $item->no_faktur }}">{{ $item->no_faktur }}</option>
-                                @endforeach
-                            </select>
-                        </td>
-                        <td>
-                            <select class="search">
-                                <option value>{{ trans('global.all') }}</option>
-                                @foreach($pelanggans as $key => $item)
-                                    <option value="{{ $item->name }}">{{ $item->name }}</option>
                                 @endforeach
                             </select>
                         </td>
@@ -117,9 +106,6 @@
                             </td>
                             <td>
                                 {{ $pembayaran->faktur->no_faktur ?? '' }}
-                            </td>
-                            <td>
-                                {{ $pembayaran->customer->name ?? '' }}
                             </td>
                             <td>
                                 {{ App\Models\Pembayaran::TYPE_RADIO[$pembayaran->type] ?? '' }}

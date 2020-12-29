@@ -63,18 +63,6 @@
                             {{ $welding->amount_unit }}
                         </td>
                     </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.welding.fields.photo') }}
-                        </th>
-                        <td>
-                            @if($welding->photo)
-                                <a href="{{ $welding->photo->getUrl() }}" target="_blank" style="display: inline-block">
-                                    <img src="{{ $welding->photo->getUrl('thumb') }}">
-                                </a>
-                            @endif
-                        </td>
-                    </tr>
                 </tbody>
             </table>
             <div class="form-group">

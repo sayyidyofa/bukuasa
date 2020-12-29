@@ -28,9 +28,6 @@
                             {{ trans('cruds.pembayaran.fields.faktur') }}
                         </th>
                         <th>
-                            {{ trans('cruds.pembayaran.fields.customer') }}
-                        </th>
-                        <th>
                             {{ trans('cruds.pembayaran.fields.type') }}
                         </th>
                         <th>
@@ -64,9 +61,6 @@
                             </td>
                             <td>
                                 {{ $pembayaran->faktur->no_faktur ?? '' }}
-                            </td>
-                            <td>
-                                {{ $pembayaran->customer->name ?? '' }}
                             </td>
                             <td>
                                 {{ App\Models\Pembayaran::TYPE_RADIO[$pembayaran->type] ?? '' }}

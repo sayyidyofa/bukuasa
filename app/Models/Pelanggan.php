@@ -33,11 +33,6 @@ class Pelanggan extends Model
         return $date->format('Y-m-d H:i:s');
     }
 
-    public function customerPembayarans()
-    {
-        return $this->hasMany(Pembayaran::class, 'customer_id', 'id');
-    }
-
     public function pelangganFakturs()
     {
         return $this->hasMany(Faktur::class, 'pelanggan_id', 'id');

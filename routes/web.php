@@ -54,8 +54,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
     // Weldings
     Route::delete('weldings/destroy', 'WeldingController@massDestroy')->name('weldings.massDestroy');
-    Route::post('weldings/media', 'WeldingController@storeMedia')->name('weldings.storeMedia');
-    Route::post('weldings/ckmedia', 'WeldingController@storeCKEditorImages')->name('weldings.storeCKEditorImages');
     Route::resource('weldings', 'WeldingController');
 
     // Attendances
