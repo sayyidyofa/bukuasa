@@ -53,7 +53,7 @@ class DailyWeldReportTemplate implements FromCollection
             ->get()
             ->transform(fn(ProductCategory $category) => collect($category->only(['name', 'productCategoryProducts'])))
             ->each(fn(Collection $category) => $category->get('productCategoryProducts')
-                ->transform(fn(Product $product) => $product->only(['name'])))
+                ->transform(fn(Product $product) => ['name' => sprintf('[%d] %s', $product->id, $product->name)]))
             ->transform(fn($coll) => $coll->flatten())
             ->toArray();
         foreach ($categorizedProducts as $mergedArray) {

@@ -108,5 +108,7 @@ class WeldingController extends Controller
     public function import(ImportWeldingRequest $request) {
         rename($request->file('file')->getPathname(), $request->file('file')->getPathname().'.'.$request->file('file')->getClientOriginalExtension());
         (new \App\Imports\DailyWeldReport)->import($request->file('file')->getPathname().'.'.$request->file('file')->getClientOriginalExtension());
+
+        return view('home');
     }
 }
