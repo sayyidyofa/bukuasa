@@ -24,20 +24,6 @@
                 <span class="help-block">{{ trans('cruds.pembayaran.fields.faktur_helper') }}</span>
             </div>
             <div class="form-group">
-                <label class="required" for="customer_id">{{ trans('cruds.pembayaran.fields.customer') }}</label>
-                <select class="form-control select2 {{ $errors->has('customer') ? 'is-invalid' : '' }}" name="customer_id" id="customer_id" required>
-                    @foreach($customers as $id => $customer)
-                        <option value="{{ $id }}" {{ old('customer_id') == $id ? 'selected' : '' }}>{{ $customer }}</option>
-                    @endforeach
-                </select>
-                @if($errors->has('customer'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('customer') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.pembayaran.fields.customer_helper') }}</span>
-            </div>
-            <div class="form-group">
                 <label class="required">{{ trans('cruds.pembayaran.fields.type') }}</label>
                 @foreach(App\Models\Pembayaran::TYPE_RADIO as $key => $label)
                     <div class="form-check {{ $errors->has('type') ? 'is-invalid' : '' }}">

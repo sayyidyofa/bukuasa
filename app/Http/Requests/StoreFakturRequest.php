@@ -17,28 +17,25 @@ class StoreFakturRequest extends FormRequest
     public function rules()
     {
         return [
-            'pelanggan_id'  => [
+            'pelanggan_id' => [
                 'required',
                 'integer',
             ],
-            'no_faktur'     => [
+            'no_faktur'    => [
                 'required',
                 'integer',
                 'min:-2147483648',
                 'max:2147483647',
                 'unique:fakturs,no_faktur',
             ],
-            'tgl_faktur'    => [
+            'tgl_faktur'   => [
                 'required',
                 'date_format:' . config('panel.date_format'),
             ],
-            'tagihan'       => [
+            'tagihan'      => [
                 'required',
             ],
-            'diskon_markup' => [
-                'required',
-            ],
-            'photo'         => [
+            'photo'        => [
                 'required',
             ],
         ];

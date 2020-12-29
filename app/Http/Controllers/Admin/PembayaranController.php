@@ -8,7 +8,6 @@ use App\Http\Requests\MassDestroyPembayaranRequest;
 use App\Http\Requests\StorePembayaranRequest;
 use App\Http\Requests\UpdatePembayaranRequest;
 use App\Models\Faktur;
-use App\Models\Pelanggan;
 use App\Models\Pembayaran;
 use Gate;
 use Illuminate\Http\Request;
@@ -23,13 +22,11 @@ class PembayaranController extends Controller
     {
         abort_if(Gate::denies('pembayaran_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $pembayarans = Pembayaran::with(['faktur', 'customer', 'media'])->get();
+        $pembayarans = Pembayaran::with(['faktur', 'media'])->get();
 
         $fakturs = Faktur::get();
 
-        $pelanggans = Pelanggan::get();
-
-        return view('admin.pembayarans.index', compact('pembayarans', 'fakturs', 'pelanggans'));
+        return view('admin.pembayarans.index', compact('pembayarans', 'fakturs'));
     }
 
     public function create()
@@ -38,9 +35,7 @@ class PembayaranController extends Controller
 
         $fakturs = Faktur::all()->pluck('no_faktur', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $customers = Pelanggan::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-
-        return view('admin.pembayarans.create', compact('fakturs', 'customers'));
+        return view('admin.pembayarans.create', compact('fakturs'));
     }
 
     public function store(StorePembayaranRequest $request)
@@ -64,11 +59,9 @@ class PembayaranController extends Controller
 
         $fakturs = Faktur::all()->pluck('no_faktur', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $customers = Pelanggan::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $pembayaran->load('faktur');
 
-        $pembayaran->load('faktur', 'customer');
-
-        return view('admin.pembayarans.edit', compact('fakturs', 'customers', 'pembayaran'));
+        return view('admin.pembayarans.edit', compact('fakturs', 'pembayaran'));
     }
 
     public function update(UpdatePembayaranRequest $request, Pembayaran $pembayaran)
@@ -94,7 +87,7 @@ class PembayaranController extends Controller
     {
         abort_if(Gate::denies('pembayaran_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $pembayaran->load('faktur', 'customer');
+        $pembayaran->load('faktur');
 
         return view('admin.pembayarans.show', compact('pembayaran'));
     }

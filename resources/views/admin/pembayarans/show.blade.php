@@ -33,14 +33,6 @@
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.pembayaran.fields.customer') }}
-                        </th>
-                        <td>
-                            {{ $pembayaran->customer->name ?? '' }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
                             {{ trans('cruds.pembayaran.fields.type') }}
                         </th>
                         <td>

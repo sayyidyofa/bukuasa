@@ -28,7 +28,6 @@ Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Admin', '
     Route::apiResource('pelanggans', 'PelangganApiController');
 
     // Weldings
-    Route::post('weldings/media', 'WeldingApiController@storeMedia')->name('weldings.storeMedia');
     Route::apiResource('weldings', 'WeldingApiController');
 
     // Attendances

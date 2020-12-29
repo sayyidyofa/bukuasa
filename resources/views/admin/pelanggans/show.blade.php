@@ -64,20 +64,12 @@
     </div>
     <ul class="nav nav-tabs" role="tablist" id="relationship-tabs">
         <li class="nav-item">
-            <a class="nav-link" href="#customer_pembayarans" role="tab" data-toggle="tab">
-                {{ trans('cruds.pembayaran.title') }}
-            </a>
-        </li>
-        <li class="nav-item">
             <a class="nav-link" href="#pelanggan_fakturs" role="tab" data-toggle="tab">
                 {{ trans('cruds.faktur.title') }}
             </a>
         </li>
     </ul>
     <div class="tab-content">
-        <div class="tab-pane" role="tabpanel" id="customer_pembayarans">
-            @includeIf('admin.pelanggans.relationships.customerPembayarans', ['pembayarans' => $pelanggan->customerPembayarans])
-        </div>
         <div class="tab-pane" role="tabpanel" id="pelanggan_fakturs">
             @includeIf('admin.pelanggans.relationships.pelangganFakturs', ['fakturs' => $pelanggan->pelangganFakturs])
         </div>

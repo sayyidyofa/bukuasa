@@ -55,8 +55,8 @@
                 <span class="help-block">{{ trans('cruds.faktur.fields.tagihan_helper') }}</span>
             </div>
             <div class="form-group">
-                <label class="required" for="diskon_markup">{{ trans('cruds.faktur.fields.diskon_markup') }}</label>
-                <input class="form-control {{ $errors->has('diskon_markup') ? 'is-invalid' : '' }}" type="number" name="diskon_markup" id="diskon_markup" value="{{ old('diskon_markup', $faktur->diskon_markup) }}" step="0.01" required>
+                <label for="diskon_markup">{{ trans('cruds.faktur.fields.diskon_markup') }}</label>
+                <input class="form-control {{ $errors->has('diskon_markup') ? 'is-invalid' : '' }}" type="number" name="diskon_markup" id="diskon_markup" value="{{ old('diskon_markup', $faktur->diskon_markup) }}" step="0.01">
                 @if($errors->has('diskon_markup'))
                     <div class="invalid-feedback">
                         {{ $errors->first('diskon_markup') }}

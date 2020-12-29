@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Api\V1\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\Traits\MediaUploadingTrait;
 use App\Http\Requests\StoreWeldingRequest;
 use App\Http\Requests\UpdateWeldingRequest;
 use App\Http\Resources\Admin\WeldingResource;
@@ -14,8 +13,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 class WeldingApiController extends Controller
 {
-    use MediaUploadingTrait;
-
     public function index()
     {
         abort_if(Gate::denies('welding_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -26,10 +23,6 @@ class WeldingApiController extends Controller
     public function store(StoreWeldingRequest $request)
     {
         $welding = Welding::create($request->all());
-
-        if ($request->input('photo', false)) {
-            $welding->addMedia(storage_path('tmp/uploads/' . $request->input('photo')))->toMediaCollection('photo');
-        }
 
         return (new WeldingResource($welding))
             ->response()
@@ -46,18 +39,6 @@ class WeldingApiController extends Controller
     public function update(UpdateWeldingRequest $request, Welding $welding)
     {
         $welding->update($request->all());
-
-        if ($request->input('photo', false)) {
-            if (!$welding->photo || $request->input('photo') !== $welding->photo->file_name) {
-                if ($welding->photo) {
-                    $welding->photo->delete();
-                }
-
-                $welding->addMedia(storage_path('tmp/uploads/' . $request->input('photo')))->toMediaCollection('photo');
-            }
-        } elseif ($welding->photo) {
-            $welding->photo->delete();
-        }
 
         return (new WeldingResource($welding))
             ->response()

@@ -13,7 +13,7 @@ class CreateFaktursTable extends Migration
             $table->integer('no_faktur')->unique();
             $table->date('tgl_faktur');
             $table->decimal('tagihan', 15, 2);
-            $table->decimal('diskon_markup', 15, 2);
+            $table->decimal('diskon_markup', 15, 2)->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
