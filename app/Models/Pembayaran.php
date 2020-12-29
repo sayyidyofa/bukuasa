@@ -12,6 +12,43 @@ use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use \DateTimeInterface;
 
+/**
+ * App\Models\Pembayaran
+ *
+ * @property int $id
+ * @property string $type
+ * @property string $holder
+ * @property int|null $nth_payment
+ * @property string $nominal
+ * @property \Illuminate\Support\Carbon $payment_date
+ * @property string|null $keterangan
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @property int $faktur_id
+ * @property-read \App\Models\Faktur $faktur
+ * @property-read mixed $payment_proof
+ * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection|Media[] $media
+ * @property-read int|null $media_count
+ * @method static \Illuminate\Database\Eloquent\Builder|Pembayaran newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Pembayaran newQuery()
+ * @method static \Illuminate\Database\Query\Builder|Pembayaran onlyTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|Pembayaran query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Pembayaran whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Pembayaran whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Pembayaran whereFakturId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Pembayaran whereHolder($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Pembayaran whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Pembayaran whereKeterangan($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Pembayaran whereNominal($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Pembayaran whereNthPayment($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Pembayaran wherePaymentDate($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Pembayaran whereType($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Pembayaran whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|Pembayaran withTrashed()
+ * @method static \Illuminate\Database\Query\Builder|Pembayaran withoutTrashed()
+ * @mixin \Eloquent
+ */
 class Pembayaran extends Model implements HasMedia
 {
     use SoftDeletes, InteractsWithMedia, Auditable, HasFactory;

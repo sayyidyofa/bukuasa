@@ -12,6 +12,45 @@ use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use \DateTimeInterface;
 
+/**
+ * App\Models\Faktur
+ *
+ * @property int $id
+ * @property int $no_faktur
+ * @property \Illuminate\Support\Carbon $tgl_faktur
+ * @property string $tagihan
+ * @property string|null $diskon_markup
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @property int $pelanggan_id
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Cart[] $fakturCarts
+ * @property-read int|null $faktur_carts_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Delivery[] $fakturDeliveries
+ * @property-read int|null $faktur_deliveries_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Pembayaran[] $fakturPembayarans
+ * @property-read int|null $faktur_pembayarans_count
+ * @property-read mixed $photo
+ * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection|Media[] $media
+ * @property-read int|null $media_count
+ * @property-read \App\Models\Pelanggan $pelanggan
+ * @method static \Illuminate\Database\Eloquent\Builder|Faktur newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Faktur newQuery()
+ * @method static \Illuminate\Database\Query\Builder|Faktur onlyTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|Faktur query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Faktur whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Faktur whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Faktur whereDiskonMarkup($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Faktur whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Faktur whereNoFaktur($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Faktur wherePelangganId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Faktur whereTagihan($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Faktur whereTglFaktur($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Faktur whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|Faktur withTrashed()
+ * @method static \Illuminate\Database\Query\Builder|Faktur withoutTrashed()
+ * @mixin \Eloquent
+ */
 class Faktur extends Model implements HasMedia
 {
     use SoftDeletes, InteractsWithMedia, Auditable, HasFactory;
