@@ -221,7 +221,7 @@ return [
     ],
     'welding'           => [
         'title'          => 'Hasil Las',
-        'title_singular' => 'Hasil La',
+        'title_singular' => 'Hasil Las',
         'fields'         => [
             'id'                 => 'ID',
             'id_helper'          => ' ',

@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Exports\DailyWeldReportTemplate;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ImportWeldingRequest;
+use App\Http\Requests\ImportWeldingTemplateRequest;
 use App\Http\Requests\MassDestroyWeldingRequest;
 use App\Http\Requests\StoreWeldingRequest;
 use App\Http\Requests\UpdateWeldingRequest;
@@ -11,6 +14,7 @@ use App\Models\User;
 use App\Models\Welding;
 use Gate;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Symfony\Component\HttpFoundation\Response;
 
 class WeldingController extends Controller
@@ -89,5 +93,20 @@ class WeldingController extends Controller
         Welding::whereIn('id', request('ids'))->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);
+    }
+
+    public function importTemplate(ImportWeldingTemplateRequest $request) {
+        setlocale(LC_TIME, 'id');
+        $dateString = $request->get('date');
+        return (new DailyWeldReportTemplate(sprintf('Laporan Hasil Las %s', Carbon::createFromFormat('d/m/Y', $dateString)->formatLocalized("%A %d/%m/%Y"))))
+            ->download(
+                sprintf('Laporan Hasil Las %s.xlsx', Carbon::createFromFormat('d/m/Y', $dateString)->formatLocalized("%A %d-%m-%Y"))
+                , null, ['Access-Control-Allow-Origin' => '*', 'Access-Control-Allow-Methods' => 'GET']
+            );
+    }
+
+    public function import(ImportWeldingRequest $request) {
+        rename($request->file('file')->getPathname(), $request->file('file')->getPathname().'.'.$request->file('file')->getClientOriginalExtension());
+        (new \App\Imports\DailyWeldReport)->import($request->file('file')->getPathname().'.'.$request->file('file')->getClientOriginalExtension());
     }
 }

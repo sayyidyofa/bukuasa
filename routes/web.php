@@ -53,6 +53,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::resource('pelanggans', 'PelangganController');
 
     // Weldings
+    Route::post('weldings/import', 'WeldingController@import')->name('weldingImport');
+    Route::get('weldings/import_template', 'WeldingController@importTemplate')->name('weldingImportTemplate');
     Route::delete('weldings/destroy', 'WeldingController@massDestroy')->name('weldings.massDestroy');
     Route::resource('weldings', 'WeldingController');
 
