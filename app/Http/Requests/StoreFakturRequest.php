@@ -17,6 +17,10 @@ class StoreFakturRequest extends FormRequest
     public function rules()
     {
         return [
+            'pelanggan_id'  => [
+                'required',
+                'integer',
+            ],
             'no_faktur'     => [
                 'required',
                 'integer',

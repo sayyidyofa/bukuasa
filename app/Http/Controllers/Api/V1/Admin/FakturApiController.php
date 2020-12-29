@@ -20,7 +20,7 @@ class FakturApiController extends Controller
     {
         abort_if(Gate::denies('faktur_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new FakturResource(Faktur::all());
+        return new FakturResource(Faktur::with(['pelanggan'])->get());
     }
 
     public function store(StoreFakturRequest $request)
@@ -40,7 +40,7 @@ class FakturApiController extends Controller
     {
         abort_if(Gate::denies('faktur_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new FakturResource($faktur);
+        return new FakturResource($faktur->load(['pelanggan']));
     }
 
     public function update(UpdateFakturRequest $request, Faktur $faktur)

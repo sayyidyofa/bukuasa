@@ -54,7 +54,7 @@ class PelangganController extends Controller
     {
         abort_if(Gate::denies('pelanggan_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $pelanggan->load('customerPembayarans');
+        $pelanggan->load('customerPembayarans', 'pelangganFakturs');
 
         return view('admin.pelanggans.show', compact('pelanggan'));
     }

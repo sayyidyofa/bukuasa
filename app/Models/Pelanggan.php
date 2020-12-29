@@ -37,4 +37,9 @@ class Pelanggan extends Model
     {
         return $this->hasMany(Pembayaran::class, 'customer_id', 'id');
     }
+
+    public function pelangganFakturs()
+    {
+        return $this->hasMany(Faktur::class, 'pelanggan_id', 'id');
+    }
 }
