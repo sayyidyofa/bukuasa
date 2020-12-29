@@ -16,7 +16,6 @@ use \DateTimeInterface;
  * App\Models\Faktur
  *
  * @property int $id
- * @property int $no_faktur
  * @property \Illuminate\Support\Carbon $tgl_faktur
  * @property string $tagihan
  * @property string|null $diskon_markup
@@ -42,7 +41,6 @@ use \DateTimeInterface;
  * @method static \Illuminate\Database\Eloquent\Builder|Faktur whereDeletedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Faktur whereDiskonMarkup($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Faktur whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Faktur whereNoFaktur($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Faktur wherePelangganId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Faktur whereTagihan($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Faktur whereTglFaktur($value)
@@ -69,6 +67,7 @@ class Faktur extends Model implements HasMedia
     ];
 
     protected $fillable = [
+        'id',
         'pelanggan_id',
         'no_faktur',
         'tgl_faktur',

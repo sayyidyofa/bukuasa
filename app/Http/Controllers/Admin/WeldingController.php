@@ -109,6 +109,6 @@ class WeldingController extends Controller
         rename($request->file('file')->getPathname(), $request->file('file')->getPathname().'.'.$request->file('file')->getClientOriginalExtension());
         (new \App\Imports\DailyWeldReport)->import($request->file('file')->getPathname().'.'.$request->file('file')->getClientOriginalExtension());
 
-        return view('home');
+        return redirect('/admin');
     }
 }

@@ -71,6 +71,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::resource('overtimes', 'OvertimeController');
 
     // Deliveries
+    Route::post('deliveries/import', 'DeliveryController@import')->name('deliveryImport');
     Route::delete('deliveries/destroy', 'DeliveryController@massDestroy')->name('deliveries.massDestroy');
     Route::resource('deliveries', 'DeliveryController');
 

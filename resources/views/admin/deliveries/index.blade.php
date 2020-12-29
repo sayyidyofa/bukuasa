@@ -8,6 +8,16 @@
             </a>
         </div>
     </div>
+    <div class="card">
+        <div class="card-body">
+            <form action="{{ route('admin.deliveryImport') }}" enctype="multipart/form-data" method="post">
+                @csrf
+                <label for="file">Upload File laporan</label>
+                <input type="file" name="file" required>
+                <button type="submit" class="btn btn-dark">Upload</button>
+            </form>
+        </div>
+    </div>
 @endcan
 <div class="card">
     <div class="card-header">
