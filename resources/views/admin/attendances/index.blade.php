@@ -8,6 +8,31 @@
             </a>
         </div>
     </div>
+    <div class="card">
+        <div class="card-body">
+            <form action="{{ route('admin.attendanceImport') }}" enctype="multipart/form-data" method="post">
+                @csrf
+                <label for="file">Upload File laporan</label>
+                <input type="file" name="file" required>
+                <button type="submit" class="btn btn-dark">Upload</button>
+            </form>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-body">
+            <form action="{{ route('admin.attendanceImportTemplate') }}">
+                @csrf
+                <label class="required" for="date">Download Template Excel</label>
+                <input class="form-control-sm date {{ $errors->has('date') ? 'is-invalid' : '' }}" type="text" name="date" id="date" placeholder="Absen Tanggal..." required>
+                @if($errors->has('date'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('date') }}
+                    </div>
+                @endif
+                <button type="submit" class="btn btn-dark">Download</button>
+            </form>
+        </div>
+    </div>
 @endcan
 <div class="card">
     <div class="card-header">

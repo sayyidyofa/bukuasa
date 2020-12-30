@@ -2,14 +2,22 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Exports\DailyAttendanceTemplate;
+use App\Exports\DailyWeldReportTemplate;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ImportAttendanceRequest;
+use App\Http\Requests\ImportAttendanceTemplateRequest;
+use App\Http\Requests\ImportWeldingRequest;
+use App\Http\Requests\ImportWeldingTemplateRequest;
 use App\Http\Requests\MassDestroyAttendanceRequest;
 use App\Http\Requests\StoreAttendanceRequest;
 use App\Http\Requests\UpdateAttendanceRequest;
+use App\Imports\DailyAttendance;
 use App\Models\Attendance;
 use App\Models\User;
 use Gate;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Symfony\Component\HttpFoundation\Response;
 
 class AttendanceController extends Controller
@@ -82,5 +90,22 @@ class AttendanceController extends Controller
         Attendance::whereIn('id', request('ids'))->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);
+    }
+
+    public function importTemplate(ImportAttendanceTemplateRequest $request) {
+        setlocale(LC_TIME, 'id');
+        $dateString = $request->get('date');
+        return (new DailyAttendanceTemplate(sprintf('Laporan Absen %s', Carbon::createFromFormat('d/m/Y', $dateString)->formatLocalized("%A %d/%m/%Y"))))
+            ->download(
+                sprintf('Laporan Absen %s.xlsx', Carbon::createFromFormat('d/m/Y', $dateString)->formatLocalized("%A %d-%m-%Y"))
+                , null, ['Access-Control-Allow-Origin' => '*', 'Access-Control-Allow-Methods' => 'GET']
+            );
+    }
+
+    public function import(ImportAttendanceRequest $request) {
+        rename($request->file('file')->getPathname(), $request->file('file')->getPathname().'.'.$request->file('file')->getClientOriginalExtension());
+        (new DailyAttendance)->import($request->file('file')->getPathname().'.'.$request->file('file')->getClientOriginalExtension());
+
+        return redirect('/admin');
     }
 }

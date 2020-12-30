@@ -59,6 +59,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::resource('weldings', 'WeldingController');
 
     // Attendances
+    Route::post('attendances/import', 'AttendanceController@import')->name('attendanceImport');
+    Route::get('attendances/import_template', 'AttendanceController@importTemplate')->name('attendanceImportTemplate');
     Route::delete('attendances/destroy', 'AttendanceController@massDestroy')->name('attendances.massDestroy');
     Route::resource('attendances', 'AttendanceController');
 

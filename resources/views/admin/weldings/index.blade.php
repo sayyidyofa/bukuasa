@@ -23,7 +23,7 @@
             <form action="{{ route('admin.weldingImportTemplate') }}">
                 @csrf
                 <label class="required" for="date">Download Template Excel</label>
-                <input class="form-control-sm date {{ $errors->has('date') ? 'is-invalid' : '' }}" type="text" name="date" id="date" value="{{ old('date') }}" placeholder="Laporan Las Tanggal..." required>
+                <input class="form-control-sm date {{ $errors->has('date') ? 'is-invalid' : '' }}" type="text" name="date" id="date" placeholder="Laporan Las Tanggal..." required>
                 @if($errors->has('date'))
                     <div class="invalid-feedback">
                         {{ $errors->first('date') }}
