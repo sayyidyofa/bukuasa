@@ -4,6 +4,7 @@
 namespace App\Imports;
 
 
+use App\Models\Product;
 use App\Models\ProductCategory;
 use App\Models\User;
 use App\Models\Welding;
@@ -108,9 +109,12 @@ class DailyWeldReport implements ToCollection
         $this->setDateString(Regex::match('/[0-9]{1,2}\/[0-9]{1,2}\/[0-9]{4}$/', $allRows->first()->first())->result());
 
         $allRows->each(function (Collection $row, int $index) use ($allRows) {
-            if ($index >= 3) {
+            $productsCount = Product::count();
+            $batas = $productsCount + 3;
+            if ($index >= 3 && $index < $batas) {
                 $row->each(function ($value, int $subIdx) use ($allRows) {
                     if ($subIdx === 1) {
+                        //dd(Regex::match('/(?<=\[).+?(?=\])/', $value)->result());
                         $this->setProductId(Regex::match('/(?<=\[).+?(?=\])/', $value)->result()); // https://stackoverflow.com/a/27225148/8885105
                     }
                     elseif ($subIdx >= 2) {
