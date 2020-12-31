@@ -110,7 +110,7 @@
             </li>
         @endcan
         @can('penggajian_access')
-            <li class="c-sidebar-nav-dropdown {{ request()->is("admin/kasbons*") ? "c-show" : "" }} {{ request()->is("admin/salaries*") ? "c-show" : "" }}">
+            <li class="c-sidebar-nav-dropdown {{ request()->is("admin/kasbons*") ? "c-show" : "" }} {{ request()->is("admin/salaries*") ? "c-show" : "" }} {{ request()->is("admin/salary-constants*") ? "c-show" : "" }}">
                 <a class="c-sidebar-nav-dropdown-toggle" href="#">
                     <i class="fa-fw fas fa-hand-holding-usd c-sidebar-nav-icon">
 
@@ -135,6 +135,16 @@
 
                                 </i>
                                 {{ trans('cruds.salary.title') }}
+                            </a>
+                        </li>
+                    @endcan
+                    @can('salary_constant_access')
+                        <li class="c-sidebar-nav-item">
+                            <a href="{{ route("admin.salary-constants.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/salary-constants") || request()->is("admin/salary-constants/*") ? "c-active" : "" }}">
+                                <i class="fa-fw fas fa-pen-nib c-sidebar-nav-icon">
+
+                                </i>
+                                {{ trans('cruds.salaryConstant.title') }}
                             </a>
                         </li>
                     @endcan
@@ -243,6 +253,16 @@
                         </li>
                     @endcan
                 </ul>
+            </li>
+        @endcan
+        @can('setting_access')
+            <li class="c-sidebar-nav-item">
+                <a href="{{ route("admin.settings.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/settings") || request()->is("admin/settings/*") ? "c-active" : "" }}">
+                    <i class="fa-fw fas fa-cogs c-sidebar-nav-icon">
+
+                    </i>
+                    {{ trans('cruds.setting.title') }}
+                </a>
             </li>
         @endcan
         @can('content_management_access')

@@ -66,4 +66,10 @@ Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Admin', '
 
     // Faq Questions
     Route::apiResource('faq-questions', 'FaqQuestionApiController');
+
+    // Salary Constants
+    Route::apiResource('salary-constants', 'SalaryConstantApiController');
+
+    // Settings
+    Route::apiResource('settings', 'SettingApiController');
 });

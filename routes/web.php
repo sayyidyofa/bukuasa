@@ -110,6 +110,14 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     // Faq Questions
     Route::delete('faq-questions/destroy', 'FaqQuestionController@massDestroy')->name('faq-questions.massDestroy');
     Route::resource('faq-questions', 'FaqQuestionController');
+
+    // Salary Constants
+    Route::delete('salary-constants/destroy', 'SalaryConstantController@massDestroy')->name('salary-constants.massDestroy');
+    Route::resource('salary-constants', 'SalaryConstantController');
+
+    // Settings
+    Route::delete('settings/destroy', 'SettingController@massDestroy')->name('settings.massDestroy');
+    Route::resource('settings', 'SettingController');
 });
 Route::group(['prefix' => 'profile', 'as' => 'profile.', 'namespace' => 'Auth', 'middleware' => ['auth']], function () {
 // Change password
