@@ -53,14 +53,10 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::resource('pelanggans', 'PelangganController');
 
     // Weldings
-    Route::post('weldings/import', 'WeldingController@import')->name('weldingImport');
-    Route::get('weldings/import_template', 'WeldingController@importTemplate')->name('weldingImportTemplate');
     Route::delete('weldings/destroy', 'WeldingController@massDestroy')->name('weldings.massDestroy');
     Route::resource('weldings', 'WeldingController');
 
     // Attendances
-    Route::post('attendances/import', 'AttendanceController@import')->name('attendanceImport');
-    Route::get('attendances/import_template', 'AttendanceController@importTemplate')->name('attendanceImportTemplate');
     Route::delete('attendances/destroy', 'AttendanceController@massDestroy')->name('attendances.massDestroy');
     Route::resource('attendances', 'AttendanceController');
 
@@ -73,7 +69,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::resource('overtimes', 'OvertimeController');
 
     // Deliveries
-    Route::post('deliveries/import', 'DeliveryController@import')->name('deliveryImport');
     Route::delete('deliveries/destroy', 'DeliveryController@massDestroy')->name('deliveries.massDestroy');
     Route::resource('deliveries', 'DeliveryController');
 
@@ -110,6 +105,14 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     // Faq Questions
     Route::delete('faq-questions/destroy', 'FaqQuestionController@massDestroy')->name('faq-questions.massDestroy');
     Route::resource('faq-questions', 'FaqQuestionController');
+
+    // Salary Constants
+    Route::delete('salary-constants/destroy', 'SalaryConstantController@massDestroy')->name('salary-constants.massDestroy');
+    Route::resource('salary-constants', 'SalaryConstantController');
+
+    // Settings
+    Route::delete('settings/destroy', 'SettingController@massDestroy')->name('settings.massDestroy');
+    Route::resource('settings', 'SettingController');
 });
 Route::group(['prefix' => 'profile', 'as' => 'profile.', 'namespace' => 'Auth', 'middleware' => ['auth']], function () {
 // Change password

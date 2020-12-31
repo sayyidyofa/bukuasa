@@ -21,11 +21,12 @@ class UpdateFakturRequest extends FormRequest
                 'required',
                 'integer',
             ],
-            'id'    => [
+            'no_faktur'    => [
                 'required',
                 'integer',
-                'min:1',
+                'min:-2147483648',
                 'max:2147483647',
+                'unique:fakturs,no_faktur,' . request()->route('faktur')->id,
             ],
             'tgl_faktur'   => [
                 'required',

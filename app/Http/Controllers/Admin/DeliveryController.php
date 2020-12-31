@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\ImportDeliveryRequest;
 use App\Http\Requests\MassDestroyDeliveryRequest;
 use App\Http\Requests\StoreDeliveryRequest;
 use App\Http\Requests\UpdateDeliveryRequest;
@@ -83,12 +82,5 @@ class DeliveryController extends Controller
         Delivery::whereIn('id', request('ids'))->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);
-    }
-
-    public function import(ImportDeliveryRequest $request) {
-        rename($request->file('file')->getPathname(), $request->file('file')->getPathname().'.'.$request->file('file')->getClientOriginalExtension());
-        (new \App\Imports\DailyDelivery)->import($request->file('file')->getPathname().'.'.$request->file('file')->getClientOriginalExtension());
-
-        return redirect('/admin');
     }
 }

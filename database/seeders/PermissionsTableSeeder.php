@@ -472,6 +472,46 @@ class PermissionsTableSeeder extends Seeder
             ],
             [
                 'id'    => 116,
+                'title' => 'salary_constant_create',
+            ],
+            [
+                'id'    => 117,
+                'title' => 'salary_constant_edit',
+            ],
+            [
+                'id'    => 118,
+                'title' => 'salary_constant_show',
+            ],
+            [
+                'id'    => 119,
+                'title' => 'salary_constant_delete',
+            ],
+            [
+                'id'    => 120,
+                'title' => 'salary_constant_access',
+            ],
+            [
+                'id'    => 121,
+                'title' => 'setting_create',
+            ],
+            [
+                'id'    => 122,
+                'title' => 'setting_edit',
+            ],
+            [
+                'id'    => 123,
+                'title' => 'setting_show',
+            ],
+            [
+                'id'    => 124,
+                'title' => 'setting_delete',
+            ],
+            [
+                'id'    => 125,
+                'title' => 'setting_access',
+            ],
+            [
+                'id'    => 126,
                 'title' => 'profile_password_edit',
             ],
         ];

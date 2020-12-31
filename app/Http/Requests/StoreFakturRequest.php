@@ -21,12 +21,12 @@ class StoreFakturRequest extends FormRequest
                 'required',
                 'integer',
             ],
-            'id'    => [
+            'no_faktur'    => [
                 'required',
                 'integer',
-                'min:1',
+                'min:-2147483648',
                 'max:2147483647',
-                'unique:fakturs,id',
+                'unique:fakturs,no_faktur',
             ],
             'tgl_faktur'   => [
                 'required',

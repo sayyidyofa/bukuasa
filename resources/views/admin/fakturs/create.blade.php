@@ -24,11 +24,11 @@
                 <span class="help-block">{{ trans('cruds.faktur.fields.pelanggan_helper') }}</span>
             </div>
             <div class="form-group">
-                <label class="required" for="id">{{ trans('cruds.faktur.fields.no_faktur') }}</label>
-                <input class="form-control {{ $errors->has('id') ? 'is-invalid' : '' }}" type="number" name="id" id="id" value="{{ old('id', '') }}" step="1" required>
-                @if($errors->has('id'))
+                <label class="required" for="no_faktur">{{ trans('cruds.faktur.fields.no_faktur') }}</label>
+                <input class="form-control {{ $errors->has('no_faktur') ? 'is-invalid' : '' }}" type="number" name="no_faktur" id="no_faktur" value="{{ old('no_faktur', '') }}" step="1" required>
+                @if($errors->has('no_faktur'))
                     <div class="invalid-feedback">
-                        {{ $errors->first('id') }}
+                        {{ $errors->first('no_faktur') }}
                     </div>
                 @endif
                 <span class="help-block">{{ trans('cruds.faktur.fields.no_faktur_helper') }}</span>
