@@ -36,7 +36,7 @@ class DailyWeldReportTemplate implements FromCollection
         $headerAtas = collect(['Kategori', 'Barang']);
         $headerBawah = collect([null, null]);
         User::whereHas('roles', function ($q) {
-            return $q->where('title', 'Welder');
+            return $q->where('title', config('roles.welder'));
         })->get(['name'])->pluck('name')->each(function ($elem) use ($headerBawah, $headerAtas) {
             $headerAtas->push($elem);
             $headerAtas->push(null);

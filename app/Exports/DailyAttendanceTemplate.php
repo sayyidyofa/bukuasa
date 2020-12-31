@@ -34,7 +34,7 @@ class DailyAttendanceTemplate implements FromCollection
         $exportCollection->push(collect(['Karyawan', 'Status', 'Keterangan']));
 
         // Nama
-        User::whereHas('roles', fn($q) => $q->whereIn('title', ['Welder', 'Driver', 'Assembler', 'Foreman']))->get()->pluck('name')->each(fn($uglyphp) => $exportCollection->push(collect([$uglyphp])));
+        User::whereHas('roles', fn($q) => $q->whereIn('title', config('roles.weekly')))->get()->pluck('name')->each(fn($uglyphp) => $exportCollection->push(collect([$uglyphp])));
 
         return $exportCollection;
     }
