@@ -5,7 +5,6 @@ return [
         'Kepala Bagian Las',
         'Kepala Bagian Potong',
         'Kepala Bagian Hasil Produksi dan Perlengkapan',
-        'Operator Las',
         'Operator Mesin Potong',
         'Operator Mesin Tarek',
         'Operator Bengkokkan',

@@ -54,6 +54,11 @@ class Role extends Model
         return $date->format('Y-m-d H:i:s');
     }
 
+    public function roleSalaryConstants()
+    {
+        return $this->hasMany(SalaryConstant::class, 'role_id', 'id');
+    }
+
     public function permissions()
     {
         return $this->belongsToMany(Permission::class);
