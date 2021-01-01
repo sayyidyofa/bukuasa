@@ -123,13 +123,15 @@ class DailyWeldReport implements ToCollection
                             $this->setWelderId(User::where('name', '=', $allRows[1][$subIdx])->get()->first()->id);
                         } else {
                             $this->setWeight($value);
-                            (new Welding([
-                                'date' => $this->getDateString(),
-                                'user_id' => $this->getWelderId(),
-                                'product_id' => $this->getProductId(),
-                                'weight_kg' => $this->getWeight(),
-                                'amount_unit' => $this->getKeping()
-                            ]))->save();
+                            if (!is_null($this->getDateString()) && !is_null($this->getProductId()) && !is_null($this->getKeping()) && !is_null($this->getWeight()) && !is_null($this->getWelderId())) {
+                                (new Welding([
+                                    'date' => $this->getDateString(),
+                                    'user_id' => $this->getWelderId(),
+                                    'product_id' => $this->getProductId(),
+                                    'weight_kg' => $this->getWeight(),
+                                    'amount_unit' => $this->getKeping()
+                                ]))->save();
+                            }
                         }
                     }
                 });
