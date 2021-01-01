@@ -8,6 +8,8 @@
         <div class="card-body">
             <form action="{{ route('admin.weeklySalaryProcess') }}" method="post">
                 @csrf
+                <input type="hidden" name="from" value="{{ $startDate }}">
+                <input type="hidden" name="to" value="{{ $endDate }}">
                 @foreach($viewData as $roleName => $salariesByRole)
                     @if($roleName === '')
                     @else
@@ -18,8 +20,6 @@
                             <div class="card-body">
                                 @foreach($salariesByRole as $userId => $salaryByUser)
                                     <input type="hidden" name="{{'id-'.$userId}}" value="{{ $userId }}">
-                                    <input type="hidden" name="{{'from-'.$userId}}" value="{{ $startDate }}">
-                                    <input type="hidden" name="{{'to-'.$userId}}" value="{{ $endDate }}">
                                     <input class="form-control" type="hidden" name="{{'nominal-'.$userId}}" id="{{'nominal-'.$userId}}" value="{{ $salaryByUser }}" readonly>
                                     <div class="card">
                                         <div class="card-header">
