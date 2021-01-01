@@ -392,7 +392,7 @@ return [
             'markup'            => 'Markup',
             'markup_helper'     => 'Pembulatan gaji, jika ada',
             'keterangan'        => 'Keterangan',
-            'keterangan_helper' => 'Keterangan utk markup.',
+            'keterangan_helper' => 'Keterangan utk pembulatan/penambahan/pengurangan gaji (jika ada)',
             'from'              => 'From',
             'from_helper'       => ' ',
             'to'                => 'To',
