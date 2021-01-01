@@ -17,7 +17,7 @@ class ImportWeldingTemplateRequest extends FormRequest
     public function rules()
     {
         return [
-            'date' => 'required|date'
+            'date' => 'required'
         ];
     }
 }
