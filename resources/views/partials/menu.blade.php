@@ -129,14 +129,18 @@
                         </li>
                     @endcan
                     @can('salary_access')
-                        <li class="c-sidebar-nav-item">
-                            <a href="{{ route("admin.salaries.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/salaries") || request()->is("admin/salaries/*") ? "c-active" : "" }}">
-                                <i class="fa-fw fas fa-hand-holding-usd c-sidebar-nav-icon">
-
-                                </i>
-                                {{ trans('cruds.salary.title') }}
-                            </a>
-                        </li>
+                            <li class="c-sidebar-nav-item">
+                                <a href="#" id="toWeeklySalaryForm" class="c-sidebar-nav-link {{ request()->is("admin/salaries/weekly/form") ? "c-active" : "" }}">
+                                    <i class="fa-fw fas fa-book c-sidebar-nav-icon"></i>
+                                    Input Mingguan
+                                </a>
+                            </li>
+                            <li class="c-sidebar-nav-item">
+                                <a href="#" id="toMonthlySalaryForm" class="c-sidebar-nav-link {{ request()->is("admin/salaries/monthly/form") ? "c-active" : "" }}">
+                                    <i class="fa-fw fas fa-book c-sidebar-nav-icon"></i>
+                                    Input Bulanan
+                                </a>
+                            </li>
                     @endcan
                     @can('salary_constant_access')
                         <li class="c-sidebar-nav-item">
