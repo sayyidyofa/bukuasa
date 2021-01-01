@@ -86,6 +86,10 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::resource('kasbons', 'KasbonController');
 
     // Salaries
+    Route::get('salaries/weekly', 'SalaryController@weeklySalaryForm')->name('weeklySalaryForm');
+    Route::get('salaries/monthly', 'SalaryController@monthlySalaryForm')->name('monthlySalaryForm');
+    Route::post('salaries/weekly', 'SalaryController@weeklySalaryProcess')->name('weeklySalaryProcess');
+    Route::post('salaries/monthly', 'SalaryController@monthlySalaryProcess')->name('monthlySalaryProcess');
     Route::delete('salaries/destroy', 'SalaryController@massDestroy')->name('salaries.massDestroy');
     Route::resource('salaries', 'SalaryController');
 
