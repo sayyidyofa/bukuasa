@@ -106,6 +106,6 @@ class AttendanceController extends Controller
         rename($request->file('file')->getPathname(), $request->file('file')->getPathname().'.'.$request->file('file')->getClientOriginalExtension());
         (new DailyAttendance)->import($request->file('file')->getPathname().'.'.$request->file('file')->getClientOriginalExtension());
 
-        return redirect('/admin');
+        return redirect('/admin')->with(['status' => 'Data absensi berhasil disimpan']);
     }
 }

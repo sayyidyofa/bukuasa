@@ -89,6 +89,6 @@ class DeliveryController extends Controller
         rename($request->file('file')->getPathname(), $request->file('file')->getPathname().'.'.$request->file('file')->getClientOriginalExtension());
         (new \App\Imports\DailyDelivery)->import($request->file('file')->getPathname().'.'.$request->file('file')->getClientOriginalExtension());
 
-        return redirect('/admin');
+        return redirect('/admin')->with(['status' => 'Data pengiriman berhasil disimpan']);
     }
 }
