@@ -111,4 +111,9 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Role::class);
     }
+
+    // Possibly null
+    public function salaryConstant() {
+        return $this->roles->first()->roleSalaryConstants->first()->nominal;
+    }
 }
