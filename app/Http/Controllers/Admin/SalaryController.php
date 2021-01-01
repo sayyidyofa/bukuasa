@@ -18,117 +18,13 @@ use App\Models\User;
 use App\Models\Welding;
 use Gate;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use Symfony\Component\HttpFoundation\Response;
 
 class SalaryController extends Controller
 {
-    private string $from;
-    private string $to;
-    private int $nominal;
-    private int $markup;
-    private string $keterangan;
-    private int $employeeId;
-
-    /**
-     * @return int
-     */
-    public function getEmployeeId(): int
-    {
-        return $this->employeeId;
-    }
-
-    /**
-     * @param int $employeeId
-     */
-    public function setEmployeeId(int $employeeId): void
-    {
-        $this->employeeId = $employeeId;
-    }
-
-    /**
-     * @return string
-     */
-    public function getFrom(): string
-    {
-        return $this->from;
-    }
-
-    /**
-     * @param string $from
-     */
-    public function setFrom(string $from): void
-    {
-        $this->from = $from;
-    }
-
-    /**
-     * @return string
-     */
-    public function getTo(): string
-    {
-        return $this->to;
-    }
-
-    /**
-     * @param string $to
-     */
-    public function setTo(string $to): void
-    {
-        $this->to = $to;
-    }
-
-    /**
-     * @return int
-     */
-    public function getNominal(): int
-    {
-        return $this->nominal;
-    }
-
-    /**
-     * @param int $nominal
-     */
-    public function setNominal(int $nominal): void
-    {
-        $this->nominal = $nominal;
-    }
-
-    /**
-     * @return int
-     */
-    public function getMarkup(): int
-    {
-        return $this->markup;
-    }
-
-    /**
-     * @param int $markup
-     */
-    public function setMarkup(int $markup): void
-    {
-        $this->markup = $markup;
-    }
-
-    /**
-     * @return string
-     */
-    public function getKeterangan(): string
-    {
-        return $this->keterangan;
-    }
-
-    /**
-     * @param string $keterangan
-     */
-    public function setKeterangan(string $keterangan): void
-    {
-        $this->keterangan = $keterangan;
-    }
-
-    ////
-
     public function index()
     {
         abort_if(Gate::denies('salary_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -254,34 +150,23 @@ class SalaryController extends Controller
         $rawData = $request->all();
         unset($rawData['_token']);
 
-        $this->setFrom($rawData['from']);
-        $this->setTo($rawData['to']);
+        $from = Carbon::createFromFormat('Y-m-d', $rawData['from'])->format('d/m/Y');
+        $to = Carbon::createFromFormat('Y-m-d', $rawData['to'])->format('d/m/Y');
+        unset($rawData['from']);
+        unset($rawData['to']);
 
-        foreach ($rawData as $key => $value) {
-            if (Str::contains($key, 'id-')) {
-                $this->setEmployeeId($value);
-            }
-            elseif (Str::contains($key, 'nominal-')) {
-                $this->setNominal($value);
-            }
-            elseif (Str::contains($key, 'markup-')) {
-                $this->setMarkup($value);
-            }
-            elseif (Str::contains($key, 'keterangan-')) {
-                $this->setKeterangan($value);
-            }
-
-            if ([$this->getEmployeeId(), $this->getFrom(), $this->getTo(), $this->getMarkup(), $this->getNominal()] !== [null, null, null, null, null]) {
-                (new Salary([
-                    'user_id' => $this->getEmployeeId(),
-                    'nominal' => $this->getNominal(),
-                    'markup' => $this->getMarkup() - $this->getNominal(),
-                    'from' => $this->getFrom(),
-                    'to' => $this->getTo(),
-                    'keterangan' => $this->getKeterangan()
-                ]))->save();
-            }
-        }
+        collect($rawData)->groupBy(function ($item, $key) {
+            return Str::after($key, '-');
+        })->each(function ($item, $key) use ($to, $from) {
+            (new Salary([
+                'user_id' => $key,
+                'nominal' => $item[1],
+                'markup' => $item[2] - $item[1],
+                'from' => $from,
+                'to' => $to,
+                'keterangan' => $item[3]
+            ]))->save();
+        });
 
         return redirect('/admin')->with(['status' => 'Gaji mingguan berhasil disimpan']);
     }
